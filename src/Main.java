@@ -7,5 +7,6 @@ public class Main {
         System.out.println("BZ is cool");
         System.out.println("Rune");
         System.out.println("Iedereen is er jujj");
+        System.out.println("niet om te spelen");
     }
 }
