@@ -1,7 +1,9 @@
+package Application;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Owner extends User{
+public class Owner extends User {
 
     private ArrayList<String> reviews;
     private Cause cause;
@@ -51,7 +53,7 @@ public class Owner extends User{
             return averageReviewScore;
         }
 
-        //Opmerking: ik denk dat het argument ownerID een string is en geen Owner object.
+        //Opmerking: ik denk dat het argument ownerID een string is en geen Application.Owner object.
         //Opmerking: ik denk dat deze methode gelinkt moet worden aan de database.
         public void addClothing(String ownerID, String clothingID, double price){
 
@@ -73,7 +75,7 @@ public class Owner extends User{
         }
 
         //Deze methode verandert het goede doel.
-        //Opmerking: indien we de klasse Cause in een enumeratie willen veranderen
+        //Opmerking: indien we de klasse Application.Cause in een enumeratie willen veranderen
         //zullen er nog wijzigingen nodig zijn aan deze methode, eens reflecteren.
         public void changeCause(Cause cause) throws Exception{
             if(cause == null)

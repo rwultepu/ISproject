@@ -1,7 +1,9 @@
+package Application;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Renter extends User{
+public class Renter extends User {
 
     private HashMap<String, String> purchaseClothings;
     private HashMap<String, String> historyRentedClothings;

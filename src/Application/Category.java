@@ -1,3 +1,5 @@
+package Application;
+
 public class Category {
 
     //Opmerking: kunnen we niet beter gebruik maken van enumeraties? Zo kunnen ze makkelijk gehaald

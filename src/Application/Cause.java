@@ -1,3 +1,5 @@
+package Application;
+
 public class Cause {
     private String causeName;
 
