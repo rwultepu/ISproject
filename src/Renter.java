@@ -1,0 +1,41 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
+public class Renter extends User{
+
+    private HashMap<String, String> purchaseClothings;
+    private HashMap<String, String> historyRentedClothings;
+
+    public Renter(String firstName, String lastName, String userID, String email,
+                  String phoneNumber, String userBirth, String streetName,
+                  int streetNumber, String city, int zipCode){
+        super(firstName, lastName, userID, email, phoneNumber, userBirth,
+                streetName, streetNumber, city, zipCode);
+
+        purchaseClothings = new HashMap<>();
+        historyRentedClothings = new HashMap<>();
+    }
+
+    //Deze methode
+    public void purchaseClothings(){
+
+    }
+
+    public ArrayList<Owner> getRecommendedOwners(){
+
+    }
+
+    public void wrightReview(Review review, String userID) throws Exception{
+        if(userID == null)
+            throw new Exception();
+
+        else {
+            for()
+
+        }
+
+
+
+    }
+
+}
