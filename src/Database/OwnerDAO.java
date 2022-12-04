@@ -1,58 +1,83 @@
 package Database;
 
-import model.Student;
+import Model.Cause;
+import Model.Owner;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class OwnerDAO {
-    public static void createTables() throws DBException {
+    public static void createOwnerTable() throws DBException {
         try {
             // dit maakt de tabellen aan, de relaties moeten nog wel gelegd
             // worden via phpmyadmin
             Connection con = DBHandler.getConnection();
             Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE Students ("
-                    + "number int(11) NOT NULL, "
-                    + "name varchar(50) NOT NULL, "
-                    + "fullTime boolean NOT NULL, "
-                    + "graduate boolean NOT NULL, "
-                    + "summary varchar(50) NOT NULL, "
-                    + "PRIMARY KEY (number)" + ")";
+            String sql = "CREATE TABLE `owner` ("
+                    + "`userid` int NOT NULL,"
+                    + "`firstName` varchar(50) NOT NULL,"
+                    + "`lastName` varchar(50) NOT NULL,"
+                    + "`email` varchar(50) NOT NULL,"
+                    + "`streetName` varchar(50) NOT NULL,"
+                    + "`streetNumber` int NOT NULL,"
+                    + "`city` varchar(50) NOT NULL,"
+                    + "`zipCode` int NOT NULL,"
+                    + "`phonenumber` varchar(50) DEFAULT NULL,"
+                    + "`userBirth` date NOT NULL,"
+                    + "`selected%tocause` int NOT NULL,"
+                    + "`causeName` varchar(45) NOT NULL,"
+                    + "PRIMARY KEY (`userid`),"
+                    + "KEY `causename_idx` (`causeName`),"
+                    + "CONSTRAINT `causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON UPDATE CASCADE\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
+            //MOET DIT LAATSTE ER WEL BIJSTAAN?
+            // als je dit wegdoet, ) moet er sws blijven!
+
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public Student getStudent(int stuNum)  {
+    public Owner getOwner(String userID)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT number, name, fullTime, graduate, summary "
-                    + "FROM Students "
-                    + "WHERE number = ?";
+            String sql1 = "SELECT firstname, lastname, email, phonenumber, userbirth, streetName, StreetNumber, city, zipcode, cause, pledge "
+                    + "FROM owner "
+                    + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
-            stmt.setInt(1,stuNum);
+            stmt.setString(1,userID);
 
-            // let op de spatie na 'summary' en 'Students' in voorgaande SQL
             ResultSet srs = stmt.executeQuery();
-            String name, summary;
-            int number;
-            boolean fullTime, graduate;
+            String firstName, lastName, email, phoneNumber, userBirth, streetName, city;
+            Cause cause;
+            int streetNumber , zipCode;
+            double pledge;
 
             if (srs.next()) {
-                number = srs.getInt("number");
-                name = srs.getString("name");
+                firstName = srs.getString("firstName");
+                lastName = srs.getString("lastName");
+                email = srs.getString("email");
+                phoneNumber = srs.getString("phoneNumber");
+                userBirth = srs.getString("userBirth");
+                streetName = srs.getString("streetName");
+                city = srs.getString("city");
 
-                fullTime = srs.getBoolean("fullTime");
-                graduate = srs.getBoolean("graduate");
-                summary = srs.getString("summary");
+                cause = ;
+                //???
+
+                streetNumber = srs.getInt("streetNumber");
+                zipCode = srs.getInt("zipCode");
+
+                pledge = srs.getDouble("pledge");
+
+
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Student student = new Student(name, number, fullTime, graduate, summary);
-            return student;
+            Owner owner = new Owner(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,cause,pledge);
+            return owner;
         } catch (Exception ex) {
             ex.printStackTrace();
             DBHandler.closeConnection(con);
@@ -60,46 +85,79 @@ public class OwnerDAO {
         }
     }
 
-    public void save(Student s)  {
+    public void saveOwner(Owner owner)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
 
-            String sqlSelect = "SELECT number "
-                    + "FROM Students "
-                    + "WHERE number = ? ";
+            String sqlSelect = "SELECT userID "
+                    + "FROM owner "
+                    + "WHERE userID = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sqlSelect);
-            stmt.setInt(1,s.getNumber());
+            stmt.setString(1,owner.getUserID());
             ResultSet srs = stmt.executeQuery();
             if (srs.next()) {
 
                 // UPDATE
-                String sqlUpdate = "UPDATE Students " +
-                        "SET name = ? ," +
-                        " fullTime = ? , " +
-                        "graduate = ?, summary = ? " +
-                        "WHERE number = ?";
+                String sqlUpdate = "UPDATE owner " +
+                        "SET firstName = ? ," +
+                        " lastName = ? , " +
+                        " email = ? " +
+                        " phoneNumber = ? , " +
+                        " userBirth = ? , " +
+                        " streetName = ? , " +
+                        " streetNumber = ? , " +
+                        " city = ? , " +
+                        " zipCode = ? , " +
+                        " cause = ? , " +
+                        " pledge = ? " +
+                        "WHERE userID = ?";
+
+
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
-                stmt2.setString(1, s.getName());
-                stmt2.setBoolean(2,s.isFullTime());
-                stmt2.setBoolean(3, s.isGraduate());
-                stmt2.setString(4, s.getSummary());
-                stmt2.setInt(5, s.getNumber());
+                stmt2.setString(1, owner.getFirstName());
+                //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
+                stmt2.setString(2, owner.isLastName());
+                stmt2.setString(3, owner.getEmail());
+                stmt2.setString(4, owner.getPhoneNumber());
+                stmt2.setString(5, owner.getUserBirth());
+                //Deze getters missen ook nog
+                stmt2.setString(6, owner.getStreetName());
+                stmt2.setString(7, owner.getStreetNumber());
+                stmt2.setString(8, owner.getCity());
+                stmt2.setString(9, owner.getZipCode());
+                //kwni goe wak me die Cause moet
+                stmt2.setCause(10, owner.getCause());
+                stmt2.setString(11, owner.getPledge());
+
+                stmt2.setString(12, owner.getUserID());
+
                 stmt2.executeUpdate();
             } else {
                 // INSERT
 
-                String sqlInsert = "INSERT into Students "
-                        + "(number, name, fullTime, graduate, summary) "
-                        + "VALUES (?,?,?,?,?)";
+                String sqlInsert = "INSERT into owner "
+                        + "(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,cause,pledge) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
-                insertStm.setInt(1, s.getNumber());
-                insertStm.setString(2,s.getName());
-                insertStm.setBoolean(3,s.isFullTime());
-                insertStm.setBoolean(4,s.isGraduate());
-                insertStm.setString(5,s.getSummary());
+                insertStm.setString(1, owner.getFirstName());
+                //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
+                insertStm.setString(2, owner.isLastName());
+                insertStm.setString(3, owner.getUserID());
+                insertStm.setString(4, owner.getEmail());
+                insertStm.setString(5, owner.getPhoneNumber());
+                insertStm.setString(6, owner.getUserBirth());
+                //Deze getters missen ook nog
+                insertStm.setString(7, owner.getStreetName());
+                insertStm.setString(8, owner.getStreetNumber());
+                insertStm.setString(9, owner.getCity());
+                insertStm.setString(10, owner.getZipCode());
+                //kwni goe wak me die Cause moet
+                insertStm.setCause(11, owner.getCause());
+                insertStm.setString(12, owner.getPledge());
+
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {
@@ -108,19 +166,19 @@ public class OwnerDAO {
         }
     }
 
-    public ArrayList<Student> getStudents()  {
+    public ArrayList<Owner> getAllOwners()  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-            String sql = "SELECT number "
-                    + "FROM Students";
+            String sql = "SELECT userID "
+                    + "FROM owner";
             ResultSet srs = stmt.executeQuery(sql);
-            ArrayList<Student> studenten = new ArrayList<Student>();
+            ArrayList<Owner> owners = new ArrayList<Owner>();
             while (srs.next())
-                studenten.add(getStudent(srs.getInt("number")));
-            return studenten;
+                owners.add(getOwner(srs.getString("userID")));
+            return owners;
         } catch (DBException dbe) {
             dbe.printStackTrace();
 
@@ -131,14 +189,14 @@ public class OwnerDAO {
         return null;
     }
 
-    public void deleteStudent(Student student)  {
+    public void deleteOwner(Owner owner)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql ="DELETE FROM Students "
-                    + "WHERE number = ?";
+            String sql ="DELETE FROM owner "
+                    + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setInt(1,student.getNumber());
+            stmt.setString(1,owner.getUserID());
 
             stmt.executeUpdate();
         } catch (DBException dbe) {
@@ -149,32 +207,5 @@ public class OwnerDAO {
 
         }
     }
-
-
-    public ArrayList<Student> getGraduates() throws DBException {
-        Connection con = null;
-        try {
-            con = DBHandler.getConnection();
-            Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
-
-            String sql = "SELECT number "
-                    + "FROM Students "
-                    + "WHERE graduate=" + true;
-            ResultSet srs = stmt.executeQuery(sql);
-
-            ArrayList<Student> studenten = new ArrayList<Student>();
-            while (srs.next())
-                studenten.add(getStudent(srs.getInt("number")));
-            return studenten;
-        } catch (DBException dbe) {
-            dbe.printStackTrace();
-            throw dbe;
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new DBException(ex);
-        }
-
-    }
-
 
 }
