@@ -1,6 +1,7 @@
 package Model;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class User {
 
@@ -9,14 +10,14 @@ public class User {
     private String userID;
     private String email;
     private String phoneNumber;
-    private String userBirth;
+    private Date userBirth;
     private String streetName;
     private int streetNumber;
     private String city;
     private int zipCode;
 
     public User(String firstName, String lastName, String userID, String email, String phoneNumber,
-                String userBirth, String streetName, int streetNumber, String city, int zipCode){
+                Date userBirth, String streetName, int streetNumber, String city, int zipCode){
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userID;
@@ -42,6 +43,34 @@ public class User {
 
     //Getter phoneNumber
     public String getPhoneNumber() {return phoneNumber;}
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public Date getUserBirth() {
+        return userBirth;
+    }
+
+    public String getStreetName() {
+        return streetName;
+    }
+
+    public int getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public int getZipCode() {
+        return zipCode;
+    }
 
     //Deze methode retourneert de volledige naam van de gebruiker.
     //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
@@ -96,4 +125,6 @@ public class User {
 
         return validAge;
     }
+
+
 }

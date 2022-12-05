@@ -13,22 +13,23 @@ public class OwnerDAO {
             // worden via phpmyadmin
             Connection con = DBHandler.getConnection();
             Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `owner` ("
-                    + "`userid` int NOT NULL,"
-                    + "`firstName` varchar(50) NOT NULL,"
-                    + "`lastName` varchar(50) NOT NULL,"
-                    + "`email` varchar(50) NOT NULL,"
-                    + "`streetName` varchar(50) NOT NULL,"
-                    + "`streetNumber` int NOT NULL,"
-                    + "`city` varchar(50) NOT NULL,"
-                    + "`zipCode` int NOT NULL,"
-                    + "`phoneNumber` varchar(50) DEFAULT NULL,"
-                    + "`userBirth` date NOT NULL,"
-                    + "`selected%ToCause` int NOT NULL,"
-                    + "`causeName` varchar(45) NOT NULL,"
-                    + "PRIMARY KEY (`userid`),"
-                    + "KEY `causename_idx` (`causeName`),"
-                    + "CONSTRAINT `causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON UPDATE CASCADE\n" +
+            String sql = "CREATE TABLE `owner` (\n" +
+                    "  `userid` int NOT NULL,\n" +
+                    "  `firstName` varchar(50) NOT NULL,\n" +
+                    "  `lastName` varchar(50) NOT NULL,\n" +
+                    "  `email` varchar(50) NOT NULL,\n" +
+                    "  `streetName` varchar(50) NOT NULL,\n" +
+                    "  `streetNumber` int NOT NULL,\n" +
+                    "  `city` varchar(50) NOT NULL,\n" +
+                    "  `zipCode` int NOT NULL,\n" +
+                    "  `phoneNumber` varchar(50) DEFAULT NULL,\n" +
+                    "  `userBirth` date NOT NULL,\n" +
+                    "  `selectedPercentageToCause` int NOT NULL,\n" +
+                    "  `causeName` varchar(45) NOT NULL,\n" +
+                    "  `selectedPercentageToCauseOfOwner` double NOT NULL,\n" +
+                    "  PRIMARY KEY (`userid`),\n" +
+                    "  KEY `causename_idx` (`causeName`),\n" +
+                    "  CONSTRAINT `causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON UPDATE CASCADE\n" +
                     ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
             //MOET DIT LAATSTE ER WEL BIJSTAAN?
             // als je dit wegdoet, ) moet er sws blijven!
@@ -43,39 +44,36 @@ public class OwnerDAO {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT firstName, lastName, email, phoneNumber, userBirth, streetName, StreetNumber, city, zipCode, cause, pledge "
+            String sql1 = "SELECT firstName, lastName, email, phoneNumber, userBirth, streetName, StreetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner"
                     + "FROM owner "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
             stmt.setString(1,userID);
 
             ResultSet srs = stmt.executeQuery();
-            String firstName, lastName, email, phoneNumber, userBirth, streetName, city;
-            Cause cause;
+            String firstName, lastName, email, phoneNumber, streetName, city, causeName;
+            Date userBirth;
             int streetNumber , zipCode;
-            double pledge;
+            double selectedPercentageToCauseOfOwner;
 
             if (srs.next()) {
                 firstName = srs.getString("firstName");
                 lastName = srs.getString("lastName");
                 email = srs.getString("email");
                 phoneNumber = srs.getString("phoneNumber");
-                userBirth = srs.getString("userBirth");
+                userBirth = srs.getDate("userBirth");
                 streetName = srs.getString("streetName");
                 city = srs.getString("city");
-                cause = srs.getString("causeName");
-                //???
-
+                causeName = srs.getString("causeName");
                 streetNumber = srs.getInt("streetNumber");
                 zipCode = srs.getInt("zipCode");
-
-                pledge = srs.getDouble("pledge");
+                selectedPercentageToCauseOfOwner = srs.getDouble("selectedPercentageToCauseOfOwner");
 
 
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Owner owner = new Owner(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode, cause.getCauseName(), pledge);
+            Owner owner = new Owner(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,causeName,selectedPercentageToCauseOfOwner);
             return owner;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -110,7 +108,7 @@ public class OwnerDAO {
                         " city = ? , " +
                         " zipCode = ? , " +
                         " cause = ? , " +
-                        " pledge = ? " +
+                        " selectedPercentageToCauseOfOwner = ? " +
                         "WHERE userID = ?";
 
 
@@ -120,15 +118,15 @@ public class OwnerDAO {
                 stmt2.setString(2, owner.getLastName());
                 stmt2.setString(3, owner.getEmail());
                 stmt2.setString(4, owner.getPhoneNumber());
-                stmt2.setString(5, owner.getUserBirth());
+                stmt2.setDate(5, (Date) owner.getUserBirth());
                 //Deze getters missen ook nog
                 stmt2.setString(6, owner.getStreetName());
-                stmt2.setString(7, owner.getStreetNumber());
+                stmt2.setInt(7, owner.getStreetNumber());
                 stmt2.setString(8, owner.getCity());
-                stmt2.setString(9, owner.getZipCode());
+                stmt2.setInt(9, owner.getZipCode());
                 //kwni goe wak me die Cause moet
-                stmt2.setCause(10, owner.getCause());
-                stmt2.setString(11, owner.getPledge());
+                stmt2.setString(10, owner.getCauseName());
+                stmt2.setDouble(11, owner.getSelectedPercentageToCauseOfOwner());
 
                 stmt2.setString(12, owner.getUserID());
 
@@ -137,25 +135,25 @@ public class OwnerDAO {
                 // INSERT
 
                 String sqlInsert = "INSERT into owner "
-                        + "(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,cause,pledge) "
+                        + "(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,causeName,selectedPercentageToCauseOfOwner) "
                         + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
                 insertStm.setString(1, owner.getFirstName());
                 //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
-                insertStm.setString(2, owner.isLastName());
+                insertStm.setString(2, owner.getLastName());
                 insertStm.setString(3, owner.getUserID());
                 insertStm.setString(4, owner.getEmail());
                 insertStm.setString(5, owner.getPhoneNumber());
-                insertStm.setString(6, owner.getUserBirth());
+                insertStm.setDate(6, (Date) owner.getUserBirth());
                 //Deze getters missen ook nog
                 insertStm.setString(7, owner.getStreetName());
-                insertStm.setString(8, owner.getStreetNumber());
+                insertStm.setInt(8, owner.getStreetNumber());
                 insertStm.setString(9, owner.getCity());
-                insertStm.setString(10, owner.getZipCode());
+                insertStm.setInt(10, owner.getZipCode());
                 //kwni goe wak me die Cause moet
-                insertStm.setCause(11, owner.getCause());
-                insertStm.setString(12, owner.getPledge());
+                insertStm.setString(11, owner.getCauseName());
+                insertStm.setDouble(12, owner.getSelectedPercentageToCauseOfOwner());
 
                 insertStm.executeUpdate();
             }
@@ -205,10 +203,6 @@ public class OwnerDAO {
             ex.printStackTrace();
 
         }
-    }
-
-    public Cause getCauseOfOwner(){
-        //Moet hier zoiets bijkomen?
     }
 
 }
