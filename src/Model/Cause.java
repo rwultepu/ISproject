@@ -1,4 +1,4 @@
-package Application;
+package Model;
 
 public class Cause {
     private String causeName;
