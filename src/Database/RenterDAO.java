@@ -21,7 +21,7 @@ public class RenterDAO {
                     + "`streetNumber` int NOT NULL,"
                     + "`city` varchar(50) NOT NULL,"
                     + "`zipCode` int NOT NULL,"
-                    + "`phonenumber` varchar(50) DEFAULT NULL,"
+                    + "`phoneNumber` varchar(50) DEFAULT NULL,"
                     + "`userBirth` date NOT NULL,"
                     + "PRIMARY KEY (`userid`),"
                     + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
@@ -38,7 +38,7 @@ public class RenterDAO {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT firstname, lastname, email, phonenumber, userbirth, streetName, StreetNumber, city, zipcode "
+            String sql1 = "SELECT firstName, lastName, email, phoneNumber, userBirth, streetName, StreetNumber, city, zipCode "
                     + "FROM renter "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);

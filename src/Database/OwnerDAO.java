@@ -22,9 +22,9 @@ public class OwnerDAO {
                     + "`streetNumber` int NOT NULL,"
                     + "`city` varchar(50) NOT NULL,"
                     + "`zipCode` int NOT NULL,"
-                    + "`phonenumber` varchar(50) DEFAULT NULL,"
+                    + "`phoneNumber` varchar(50) DEFAULT NULL,"
                     + "`userBirth` date NOT NULL,"
-                    + "`selected%tocause` int NOT NULL,"
+                    + "`selected%ToCause` int NOT NULL,"
                     + "`causeName` varchar(45) NOT NULL,"
                     + "PRIMARY KEY (`userid`),"
                     + "KEY `causename_idx` (`causeName`),"
@@ -43,7 +43,7 @@ public class OwnerDAO {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT firstname, lastname, email, phonenumber, userbirth, streetName, StreetNumber, city, zipcode, cause, pledge "
+            String sql1 = "SELECT firstName, lastName, email, phoneNumber, userBirth, streetName, StreetNumber, city, zipCode, cause, pledge "
                     + "FROM owner "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
@@ -63,8 +63,7 @@ public class OwnerDAO {
                 userBirth = srs.getString("userBirth");
                 streetName = srs.getString("streetName");
                 city = srs.getString("city");
-
-                cause = ;
+                cause = srs.getString("causeName");
                 //???
 
                 streetNumber = srs.getInt("streetNumber");
@@ -76,7 +75,7 @@ public class OwnerDAO {
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Owner owner = new Owner(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,cause,pledge);
+            Owner owner = new Owner(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode, cause.getCauseName(), pledge);
             return owner;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -118,7 +117,7 @@ public class OwnerDAO {
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setString(1, owner.getFirstName());
                 //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
-                stmt2.setString(2, owner.isLastName());
+                stmt2.setString(2, owner.getLastName());
                 stmt2.setString(3, owner.getEmail());
                 stmt2.setString(4, owner.getPhoneNumber());
                 stmt2.setString(5, owner.getUserBirth());
@@ -206,6 +205,10 @@ public class OwnerDAO {
             ex.printStackTrace();
 
         }
+    }
+
+    public Cause getCauseOfOwner(){
+        //Moet hier zoiets bijkomen?
     }
 
 }

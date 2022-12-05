@@ -13,7 +13,7 @@ public class Owner extends User {
     //constructor zodat deze geïnitialiseerd kan worden?
     public Owner(String firstName, String lastName, String userID, String email, String phoneNumber,
                  String userBirth, String streetName, int streetNumber, String city, int zipCode,
-                 Cause cause, double pledge){
+                 String causeName, double pledge){
         super(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
                 streetNumber, city, zipCode);
 
