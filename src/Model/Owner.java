@@ -94,10 +94,10 @@ public class Owner extends User {
                 this.pledge = newPledge;
         }
 
-        public HashMap< ArrayList<Clothing>, Double> bundleClothings(ArrayList<Clothing> bundeledClothings,
+        public HashMap< ArrayList<Clothing>, Double> bundledClothing(ArrayList<Clothing> bundledClothings,
                                                                      double price) {
             HashMap<ArrayList<Clothing>, Double> bundleClothingsAndPrice = new HashMap<>();
-            bundleClothingsAndPrice.put(bundeledClothings, price);
+            bundleClothingsAndPrice.put(bundledClothings, price);
 
             return bundleClothingsAndPrice;
         }

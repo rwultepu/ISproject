@@ -1,5 +1,5 @@
 package Model;
 
 public enum ShipmentMethod {
-    HomeDelivery, PickUp, CollectionPoint
+    HomeDelivery, PickUp
 }
