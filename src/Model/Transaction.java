@@ -2,11 +2,12 @@ package Model;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Transaction {
 
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private ArrayList<User> owners;
     private ArrayList<User> renters;
     private String userIDOwner;
@@ -17,13 +18,13 @@ public class Transaction {
     private ArrayList<Clothing> clothingsForTransaction;
 
 
-    public Transaction(String userIDOwner, String userIDRenter, LocalDate endDate){
+    public Transaction(String userIDOwner, String userIDRenter, Date endDate, Date startDate){
 
         this.owner = getOwner(userIDOwner);
         this.renter = getRenter(userIDRenter);
 
 
-        this.startDate = startDate.now();
+        this.startDate = startDate;
         this.endDate = endDate;
     }
 
