@@ -45,7 +45,8 @@ public class RenterDAO {
             stmt.setString(1, userID);
 
             ResultSet srs = stmt.executeQuery();
-            String firstName, lastName, email, phoneNumber, userBirth, streetName, city;
+            String firstName, lastName, email, phoneNumber, streetName, city;
+            Date userBirth;
             int streetNumber, zipCode;
 
             if (srs.next()) {
@@ -53,7 +54,7 @@ public class RenterDAO {
                 lastName = srs.getString("lastName");
                 email = srs.getString("email");
                 phoneNumber = srs.getString("phoneNumber");
-                userBirth = srs.getString("userBirth");
+                userBirth = srs.getDate("userBirth");
                 streetName = srs.getString("streetName");
                 city = srs.getString("city");
 
@@ -103,15 +104,15 @@ public class RenterDAO {
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setString(1, renter.getFirstName());
                 //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
-                stmt2.setString(2, renter.isLastName());
+                stmt2.setString(2, renter.getLastName());
                 stmt2.setString(3, renter.getEmail());
                 stmt2.setString(4, renter.getPhoneNumber());
-                stmt2.setString(5, renter.getUserBirth());
+                stmt2.setDate(5, (Date) renter.getUserBirth());
                 //Deze getters missen ook nog
                 stmt2.setString(6, renter.getStreetName());
-                stmt2.setString(7, renter.getStreetNumber());
+                stmt2.setInt(7, renter.getStreetNumber());
                 stmt2.setString(8, renter.getCity());
-                stmt2.setString(9, renter.getZipCode());
+                stmt2.setInt(9, renter.getZipCode());
 
                 stmt2.setString(10, renter.getUserID());
 
@@ -126,16 +127,16 @@ public class RenterDAO {
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
                 insertStm.setString(1, renter.getFirstName());
                 //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
-                insertStm.setString(2, renter.isLastName());
+                insertStm.setString(2, renter.getLastName());
                 insertStm.setString(3, renter.getUserID());
                 insertStm.setString(4, renter.getEmail());
                 insertStm.setString(5, renter.getPhoneNumber());
-                insertStm.setString(6, renter.getUserBirth());
+                insertStm.setDate(6, (Date) renter.getUserBirth());
                 //Deze getters missen ook nog
                 insertStm.setString(7, renter.getStreetName());
-                insertStm.setString(8, renter.getStreetNumber());
+                insertStm.setInt(8, renter.getStreetNumber());
                 insertStm.setString(9, renter.getCity());
-                insertStm.setString(10, renter.getZipCode());
+                insertStm.setInt(10, renter.getZipCode());
 
                 insertStm.executeUpdate();
             }

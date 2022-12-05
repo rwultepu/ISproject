@@ -1,11 +1,8 @@
 package Database;
 
-import Model.Cause;
-import Model.Review;
 import Model.Transaction;
 
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class TransactionDAO {
@@ -15,21 +12,24 @@ public class TransactionDAO {
             // worden via phpmyadmin
             Connection con = DBHandler.getConnection();
             Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `transaction` (\n"
-                    + "  `transactionID` int NOT NULL,\n"
-                    + "  `shipmentMethod` varchar(45) NOT NULL,\n"
-                    + "  `reviewProduct` int NOT NULL,\n"
-                    + "  `reviewService` int NOT NULL,\n"
-                    + "  `startDate` date NOT NULL,\n"
-                    + "  `endDate` date NOT NULL,\n"
-                    + "  `causeName` varchar(50) NOT NULL,\n"
-                    + "  `userID` int NOT NULL,\n"
-                    + "  PRIMARY KEY (`transactionID`),\n"
-                    + "  KEY `causename_idx` (`causeName`),\n"
-                    + "  KEY `userID_idx` (`userID`),\n"
-                    + "  CONSTRAINT `transaction.causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON DELETE RESTRICT ON UPDATE CASCADE,\n"
-                    + "  CONSTRAINT `transaction.userid` FOREIGN KEY (`userID`) REFERENCES `renter` (`userID`) ON DELETE RESTRICT ON UPDATE CASCADE\n"
-                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
+            String sql = "CREATE TABLE `transaction` (\n" +
+                    "  `transactionID` int NOT NULL,\n" +
+                    "  `shipmentMethod` varchar(45) NOT NULL,\n" +
+                    "  `reviewProduct` int NOT NULL,\n" +
+                    "  `reviewService` int NOT NULL,\n" +
+                    "  `startDate` date NOT NULL,\n" +
+                    "  `endDate` date NOT NULL,\n" +
+                    "  `causeName` varchar(50) NOT NULL,\n" +
+                    "  `userID` int NOT NULL,\n" +
+                    "  `clothingID` int NOT NULL,\n" +
+                    "  PRIMARY KEY (`transactionID`),\n" +
+                    "  KEY `causename_idx` (`causeName`),\n" +
+                    "  KEY `userID_idx` (`userID`),\n" +
+                    "  KEY `clothingID_idx` (`clothingID`),\n" +
+                    "  CONSTRAINT `clothingID` FOREIGN KEY (`clothingID`) REFERENCES `clothing` (`clothingID`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n" +
+                    "  CONSTRAINT `transaction.causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON DELETE RESTRICT ON UPDATE CASCADE,\n" +
+                    "  CONSTRAINT `transaction.userid` FOREIGN KEY (`userID`) REFERENCES `renter` (`userID`) ON DELETE RESTRICT ON UPDATE CASCADE\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -40,37 +40,32 @@ public class TransactionDAO {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID "
+            String sql1 = "SELECT shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID "
                     + "FROM transaction "
                     + "WHERE transactionID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
             stmt.setInt(1,transactionID);
 
             ResultSet srs = stmt.executeQuery();
-            ShipmentMethod  shipmentMethod;
-                // Moet in transaction nog gedeclareerd worden als enum...
-            Review reviewProduct, reviewService;
-                // Ik denk dat hier ok?
-            LocalDate startDate, endDate;
-            String causeName, userID;
+            String shipmentMethod;
+            int reviewProduct, reviewService, userID, clothingID;
+            Date startDate, endDate;
+            String causeName;
 
             if (srs.next()) {
-                shipmentMethod = srs.getInt("shipmentMethod");
-                    //??
-                reviewProduct = srs.getString("reviewProduct");
-                reviewService = srs.getBoolean("reviewService");
-                    //??
+                shipmentMethod = srs.getString("shipmentMethod");
+                reviewProduct = srs.getInt("reviewProduct");
+                reviewService = srs.getInt("reviewService");
                 startDate = srs.getDate("startDate");
                 endDate = srs.getDate("endDate");
-                    //LocalDate vs Date: wat is het verschil?
                 causeName = srs.getString("causeName");
-                userID = srs.getString("userID");
+                userID = srs.getInt("userID");
+                clothingID = srs.getInt("clothingID");
 
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
             Transaction transaction = new Transaction();
-            // MOET NOG INGEVULD WORDEN AFH VAN WAT BRITT IN HAAR IMPLEMENTATIE STEEKT VAN TRANSACTION...
             return transaction;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -103,6 +98,7 @@ public class TransactionDAO {
                         " endDate = ? , " +
                         " causeName = ? , " +
                         " userID = ? , " +
+                        " clothingID = ? , " +
                         "WHERE transactionID = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setString(1, transaction.getShipmentMethod());
@@ -113,12 +109,13 @@ public class TransactionDAO {
                 // als die set dingen moeten ook nog aangepast worden
                 stmt2.setInt(6, transaction.getcauseName());
                 stmt2.setInt(7, transaction.getUserID());
+                stmt2.setInt(8, transaction.getClothingID());
                 stmt2.executeUpdate();
             } else {
                 // INSERT
 
                 String sqlInsert = "INSERT into transaction "
-                        + "(shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID) "
+                        + "(shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID) "
                         + "VALUES (?,?,?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
@@ -128,7 +125,8 @@ public class TransactionDAO {
                 insertStm.setBoolean(4,transaction.getStartDate());
                 insertStm.setString(5,transaction.getEndDate());
                 insertStm.setString(6,transaction.getcauseName());
-                insertStm.setString(7,transaction.getUserID());
+                insertStm.setInt(7,transaction.getUserID());
+                insertStm.setInt(7,transaction.getclothingID());
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {

@@ -14,17 +14,18 @@ public class ClothingDAO {
             // worden via phpmyadmin
             Connection con = DBHandler.getConnection();
             Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `clothing` ("
-                    + "`clothingID` int NOT NULL,"
-                    + "`price` float NOT NULL,"
-                    + "`userID` int NOT NULL,"
-                    + "PRIMARY KEY (number)" + ")"
-                    + "PRIMARY KEY (`clothingID`),"
-                    + "KEY `userID_idx` (`userID`),\n"
-                    + "  KEY `categoryName_idx` (`categoryName`),\n"
-                    + "  CONSTRAINT `categoryname` FOREIGN KEY (`categoryName`) REFERENCES `category` (`categoryName`) ON UPDATE CASCADE,\n"
-                    + "  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `owner` (`userid`)\n"
-                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
+            String sql = "CREATE TABLE `clothing` (\n" +
+                    "  `clothingID` int NOT NULL,\n" +
+                    "  `price` float NOT NULL,\n" +
+                    "  `userID` int NOT NULL,\n" +
+                    "  `categoryName` varchar(45) NOT NULL,\n" +
+                    "  `description` varchar(200) NOT NULL,\n" +
+                    "  PRIMARY KEY (`clothingID`),\n" +
+                    "  KEY `userID_idx` (`userID`),\n" +
+                    "  KEY `categoryName_idx` (`categoryName`),\n" +
+                    "  CONSTRAINT `categoryname` FOREIGN KEY (`categoryName`) REFERENCES `category` (`categoryName`) ON UPDATE CASCADE,\n" +
+                    "  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `owner` (`userid`)\n" +
+                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
             stmt.executeUpdate(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,7 +36,7 @@ public class ClothingDAO {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT price, category "
+            String sql1 = "SELECT price, categoryName, description "
                     + "FROM clothing "
                     + "WHERE clothingID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
@@ -44,17 +45,17 @@ public class ClothingDAO {
 
             ResultSet srs = stmt.executeQuery();
             double price;
-            Category category;
+            String categoryName, description;
 
             if (srs.next()) {
                 price = srs.getDouble("price");
-                category = srs.getCategory("category");
-                // category zelfde probleem als cause bij owner
+                categoryName = srs.getString("category");
+                description = srs.getString("description");
 
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Clothing clothing = new Clothing(clothingID,price,category);
+            Clothing clothing = new Clothing(clothingID,price,categoryName,description);
             return clothing;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -80,26 +81,28 @@ public class ClothingDAO {
                 // UPDATE
                 String sqlUpdate = "UPDATE clothing " +
                         "SET price = ? ," +
-                        " category = ? " +
+                        " categoryName = ? " +
+                        " description = ? " +
                         "WHERE clothingID = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setDouble(1, clothing.getPrice());
-                stmt2.setCategory(2, clothing.getCategory());
+                stmt2.setString(2, clothing.getCategoryName());
                 //...
-                stmt2.setString(3, clothing.getClothingID());
+                stmt2.setString(3, clothing.getDescription());
+                stmt2.setString(4, clothing.getClothingID());
                 stmt2.executeUpdate();
             } else {
                 // INSERT
 
                 String sqlInsert = "INSERT into clothing "
-                        + "(clothingID, price, category) "
-                        + "VALUES (?,?,?)";
+                        + "(clothingID, price, categoryName,description) "
+                        + "VALUES (?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
                 insertStm.setString(1, clothing.getClothingID());
                 insertStm.setDouble(2, clothing.getPrice());
-                insertStm.setCategory(3,clothing.getCategory());
-                //...
+                insertStm.setString(3,clothing.getCategoryName());
+                insertStm.setString(4,clothing.getDescription());
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {
@@ -146,7 +149,6 @@ public class ClothingDAO {
 
         } catch (Exception ex) {
             ex.printStackTrace();
-
         }
     }
 
