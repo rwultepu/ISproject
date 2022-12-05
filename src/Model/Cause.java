@@ -35,5 +35,4 @@ public class Cause {
         }
         return causeName;
     }
-
 }

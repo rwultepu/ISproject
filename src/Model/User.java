@@ -20,7 +20,12 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = userID;
-        this.email = email;
+
+        //Opmerking: Wat gebeurt er als de email niet valid is?
+        if(isValidEmail())
+            this.email = email;
+
+
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
         this.streetName = streetName;
@@ -71,13 +76,24 @@ public class User {
         return ageUser;
     }
 
+    public boolean isValidEmail(){
+        boolean validEmail = false;
+
+        //Opmerking: De email mag niet gelijk zijn aan één van de andere emails in de database - Dus voor deze
+        //methode moet er ook ingelezen worden van de database
+        if((email != null))
+            validEmail = true;
+
+        return validEmail;
+    }
+
     //Deze methode retourneert of de gebruiker ouder of gelijk aan 16 jaar is.
-    public boolean isValid(){
-        boolean validUser = false;
+    public boolean isValidAge(){
+        boolean validAge = false;
 
         if(getAge() >= 16)
-            validUser = true;
+            validAge = true;
 
-        return validUser;
+        return validAge;
     }
 }
