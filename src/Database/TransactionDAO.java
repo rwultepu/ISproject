@@ -6,35 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class TransactionDAO {
-    public static void createTables() throws DBException {
-        try {
-            // dit maakt de tabellen aan, de relaties moeten nog wel gelegd
-            // worden via phpmyadmin
-            Connection con = DBHandler.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `transaction` (\n" +
-                    "  `transactionID` int NOT NULL,\n" +
-                    "  `shipmentMethod` varchar(45) NOT NULL,\n" +
-                    "  `reviewProduct` int NOT NULL,\n" +
-                    "  `reviewService` int NOT NULL,\n" +
-                    "  `startDate` date NOT NULL,\n" +
-                    "  `endDate` date NOT NULL,\n" +
-                    "  `causeName` varchar(50) NOT NULL,\n" +
-                    "  `userID` int NOT NULL,\n" +
-                    "  `clothingID` int NOT NULL,\n" +
-                    "  PRIMARY KEY (`transactionID`),\n" +
-                    "  KEY `causename_idx` (`causeName`),\n" +
-                    "  KEY `userID_idx` (`userID`),\n" +
-                    "  KEY `clothingID_idx` (`clothingID`),\n" +
-                    "  CONSTRAINT `clothingID` FOREIGN KEY (`clothingID`) REFERENCES `clothing` (`clothingID`) ON DELETE RESTRICT ON UPDATE RESTRICT,\n" +
-                    "  CONSTRAINT `transaction.causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON DELETE RESTRICT ON UPDATE CASCADE,\n" +
-                    "  CONSTRAINT `transaction.userid` FOREIGN KEY (`userID`) REFERENCES `renter` (`userID`) ON DELETE RESTRICT ON UPDATE CASCADE\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public Transaction getTransaction(int transactionID)  {
         Connection con = null;

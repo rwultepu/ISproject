@@ -1,6 +1,5 @@
 package Model;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -8,25 +7,31 @@ public class Transaction {
 
     private Date startDate;
     private Date endDate;
-    /*
-    private ArrayList<User> owners;
-    private ArrayList<User> renters;
-    private String userIDOwner;
-    private String userIDRenter;
-    private Owner owner;
-    private Renter renter;
+    private int transactionID;
+    private String shipmentMethod;
+    private int reviewProduct;
+    private int reviewService;
+    private String causeName;
+    private int userID;
+    private int clothingID;
 
-    private ArrayList<Clothing> clothingsForTransaction;
-*/
-
-    public Transaction(String userIDOwner, String userIDRenter, Date endDate, Date startDate){
-
-        this.owner = getOwner(userIDOwner);
-        this.renter = getRenter(userIDRenter);
+    private ArrayList<String> ShipmentMethods;
 
 
+    public Transaction(Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID) {
         this.startDate = startDate;
         this.endDate = endDate;
+        this.transactionID = transactionID;
+        this.shipmentMethod = shipmentMethod;
+        this.reviewProduct = reviewProduct;
+        this.reviewService = reviewService;
+        this.causeName = causeName;
+        this.userID = userID;
+        this.clothingID = clothingID;
+        String pickup = "Pick-Up";
+        String homedelivery = "Home-Delivery";
+        ShipmentMethods.add(pickup);
+        ShipmentMethods.add(homedelivery);
     }
 
     public Owner getOwner(String userIDOwner){

@@ -7,38 +7,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class OwnerDAO {
-    public static void createOwnerTable() throws DBException {
-        try {
-            // dit maakt de tabellen aan, de relaties moeten nog wel gelegd
-            // worden via phpmyadmin
-            Connection con = DBHandler.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `owner` (\n" +
-                    "  `userid` int NOT NULL,\n" +
-                    "  `firstName` varchar(50) NOT NULL,\n" +
-                    "  `lastName` varchar(50) NOT NULL,\n" +
-                    "  `email` varchar(50) NOT NULL,\n" +
-                    "  `streetName` varchar(50) NOT NULL,\n" +
-                    "  `streetNumber` int NOT NULL,\n" +
-                    "  `city` varchar(50) NOT NULL,\n" +
-                    "  `zipCode` int NOT NULL,\n" +
-                    "  `phoneNumber` varchar(50) DEFAULT NULL,\n" +
-                    "  `userBirth` date NOT NULL,\n" +
-                    "  `selectedPercentageToCause` int NOT NULL,\n" +
-                    "  `causeName` varchar(45) NOT NULL,\n" +
-                    "  `selectedPercentageToCauseOfOwner` double NOT NULL,\n" +
-                    "  PRIMARY KEY (`userid`),\n" +
-                    "  KEY `causename_idx` (`causeName`),\n" +
-                    "  CONSTRAINT `causename` FOREIGN KEY (`causeName`) REFERENCES `cause` (`causeName`) ON UPDATE CASCADE\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
-            //MOET DIT LAATSTE ER WEL BIJSTAAN?
-            // als je dit wegdoet, ) moet er sws blijven!
-
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public Owner getOwner(String userID)  {
         Connection con = null;
@@ -82,7 +50,7 @@ public class OwnerDAO {
         }
     }
 
-    public void saveOwner(Owner owner)  {
+    public static void saveOwner(Owner owner)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
@@ -186,7 +154,7 @@ public class OwnerDAO {
         return null;
     }
 
-    public void deleteOwner(Owner owner)  {
+    public static void deleteOwner(Owner owner)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();

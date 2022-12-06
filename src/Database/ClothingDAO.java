@@ -8,30 +8,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ClothingDAO {
-    public static void createClothingTable() throws DBException {
-        try {
-            // dit maakt de tabellen aan, de relaties moeten nog wel gelegd
-            // worden via phpmyadmin
-            Connection con = DBHandler.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `clothing` (\n" +
-                    "  `clothingID` int NOT NULL,\n" +
-                    "  `price` float NOT NULL,\n" +
-                    "  `userID` int NOT NULL,\n" +
-                    "  `categoryName` varchar(45) NOT NULL,\n" +
-                    "  `description` varchar(200) NOT NULL,\n" +
-                    "  PRIMARY KEY (`clothingID`),\n" +
-                    "  KEY `userID_idx` (`userID`),\n" +
-                    "  KEY `categoryName_idx` (`categoryName`),\n" +
-                    "  CONSTRAINT `categoryname` FOREIGN KEY (`categoryName`) REFERENCES `category` (`categoryName`) ON UPDATE CASCADE,\n" +
-                    "  CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `owner` (`userid`)\n" +
-                    ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
     public Clothing getClothing(String clothingID)  {
         Connection con = null;
         try {
