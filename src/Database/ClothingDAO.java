@@ -8,7 +8,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class ClothingDAO {
-    public Clothing getClothing(String clothingID)  {
+    public Clothing getClothing(int clothingID)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
@@ -16,7 +16,7 @@ public class ClothingDAO {
                     + "FROM clothing "
                     + "WHERE clothingID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
-            stmt.setString(1,clothingID);
+            stmt.setInt(1,clothingID);
 
 
             ResultSet srs = stmt.executeQuery();
@@ -52,7 +52,7 @@ public class ClothingDAO {
                     + "WHERE clothingID = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sqlSelect);
-            stmt.setString(1,clothing.getClothingID());
+            stmt.setInt(1,clothing.getClothingID());
             ResultSet srs = stmt.executeQuery();
             if (srs.next()) {
 
@@ -68,7 +68,7 @@ public class ClothingDAO {
                 stmt2.setInt(2, clothing.getUserID());
                 stmt2.setString(3, clothing.getCategoryName());
                 stmt2.setString(4, clothing.getDescription());
-                stmt2.setString(5, clothing.getClothingID());
+                stmt2.setInt(5, clothing.getClothingID());
                 stmt2.executeUpdate();
             } else {
                 // INSERT
@@ -78,7 +78,7 @@ public class ClothingDAO {
                         + "VALUES (?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
-                insertStm.setString(1, clothing.getClothingID());
+                insertStm.setInt(1, clothing.getClothingID());
                 insertStm.setInt(2, clothing.getUserID());
                 insertStm.setDouble(3, clothing.getPrice());
                 insertStm.setString(4,clothing.getCategoryName());
@@ -102,7 +102,7 @@ public class ClothingDAO {
             ResultSet srs = stmt.executeQuery(sql);
             ArrayList<Clothing> clothings = new ArrayList<Clothing>();
             while (srs.next())
-                clothings.add(getClothing(srs.getString("clothingID")));
+                clothings.add(getClothing(srs.getInt("clothingID")));
             return clothings;
         } catch (DBException dbe) {
             dbe.printStackTrace();
@@ -121,7 +121,7 @@ public class ClothingDAO {
             String sql ="DELETE FROM clothing "
                     + "WHERE clothingID = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1,clothing.getClothingID());
+            stmt.setInt(1,clothing.getClothingID());
 
             stmt.executeUpdate();
         } catch (DBException dbe) {
