@@ -21,14 +21,11 @@ public class User {
     private int zipCode;
     private int counter = 1;
 
-    public User(String firstName, String lastName, String email, String phoneNumber,
+    public User(String firstName, String lastName, int userID, String email, String phoneNumber,
                 LocalDate userBirth, String streetName, int streetNumber, String city, int zipCode){
         this.firstName = firstName;
         this.lastName = lastName;
-
-        this.userID = counter;
-        counter++;
-
+        this.userID = userID;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
@@ -167,8 +164,10 @@ public class User {
     public void addUser(String firstName, String lastName, int userID, String email, String phoneNumber,
                         Date userBirth, String streetName, int streetNumber, String city, int zipCode,
                         String causeName, double selectedPercentageToCauseOfOwner){
-        Owner owner = new Owner();
-        Renter renter = new Renter();
+        Owner owner = new Owner(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
+                streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
+        Renter renter = new Renter(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
+                streetNumber);
         OwnerDAO.saveOwner(owner);
         RenterDAO.saveRenter(renter);
     }

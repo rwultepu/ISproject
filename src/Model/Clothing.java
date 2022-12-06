@@ -53,7 +53,11 @@ public class Clothing {
 
     //Methode die checkt of kledij nog beschikbaar is tussen meegegeven startdate en enddate:
     public boolean isAvailable(Date wantedStartDate, Date wantedEndDate, int clothingID){
-        for()
+        boolean flag = true;
+        for(Transaction t : getTransactionsOfClothing(clothingID))
+            if(!wantedStartDate.after(t.getEndDate()) || !wantedEndDate.before(t.getStartDate()))
+                flag = false;
+        return flag;
     }
 
     //Deze methode retourneert aan welk gender het kledingstuk gelinkt is.
