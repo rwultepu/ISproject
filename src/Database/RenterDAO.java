@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class RenterDAO {
 
-    public Renter getRenter(String userID) {
+    public Renter getRenter(int userID) {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
@@ -15,7 +15,7 @@ public class RenterDAO {
                     + "FROM renter "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
-            stmt.setString(1, userID);
+            stmt.setInt(1, userID);
 
             ResultSet srs = stmt.executeQuery();
             String firstName, lastName, email, phoneNumber, streetName, city;
@@ -56,7 +56,7 @@ public class RenterDAO {
                     + "WHERE iserID = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sqlSelect);
-            stmt.setString(1, renter.getUserID());
+            stmt.setInt(1, renter.getUserID());
             ResultSet srs = stmt.executeQuery();
             if (srs.next()) {
 
@@ -87,7 +87,7 @@ public class RenterDAO {
                 stmt2.setString(8, renter.getCity());
                 stmt2.setInt(9, renter.getZipCode());
 
-                stmt2.setString(10, renter.getUserID());
+                stmt2.setInt(10, renter.getUserID());
 
                 stmt2.executeUpdate();
             } else {
@@ -101,7 +101,7 @@ public class RenterDAO {
                 insertStm.setString(1, renter.getFirstName());
                 //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
                 insertStm.setString(2, renter.getLastName());
-                insertStm.setString(3, renter.getUserID());
+                insertStm.setInt(3, renter.getUserID());
                 insertStm.setString(4, renter.getEmail());
                 insertStm.setString(5, renter.getPhoneNumber());
                 insertStm.setDate(6, (Date) renter.getUserBirth());
@@ -130,7 +130,7 @@ public class RenterDAO {
             ResultSet srs = stmt.executeQuery(sql);
             ArrayList<Renter> renters = new ArrayList<Renter>();
             while (srs.next())
-                renters.add(getRenter(srs.getString("userID")));
+                renters.add(getRenter(srs.getInt("userID")));
             return renters;
         } catch (DBException dbe) {
             dbe.printStackTrace();
@@ -149,7 +149,7 @@ public class RenterDAO {
             String sql = "DELETE FROM renter "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1, renter.getUserID());
+            stmt.setInt(1, renter.getUserID());
 
             stmt.executeUpdate();
         } catch (DBException dbe) {
