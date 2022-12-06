@@ -169,8 +169,8 @@ public class User {
                         String causeName, double selectedPercentageToCauseOfOwner){
         Owner owner = new Owner();
         Renter renter = new Renter();
-        OwnerDAO.saveOwner();
-        RenterDAO.saveRenter();
+        OwnerDAO.saveOwner(owner);
+        RenterDAO.saveRenter(renter);
     }
 
     public void deleteUser(){
