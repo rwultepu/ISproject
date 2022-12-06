@@ -169,12 +169,14 @@ public class User {
         User user = new User(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode);
         Owner owner = new Owner(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
                 streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
-        Renter renter = new Renter(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode);
+        Renter renter = new Renter(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
+                streetNumber, city, zipCode);
         OwnerDAO.saveOwner(owner);
         RenterDAO.saveRenter(renter);
         counter++;
     }
 
+    //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
     public void deleteUser(){
         OwnerDAO.deleteOwner();
         RenterDAO.deleteRenter();
