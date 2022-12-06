@@ -34,13 +34,42 @@ public class Transaction {
         ShipmentMethods.add(homedelivery);
     }
 
-    public Owner getOwner(String userIDOwner){
-
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public Renter getRenter(String userIDRenter){
-
+    public Date getEndDate() {
+        return endDate;
     }
+
+    public int getTransactionID() {
+        return transactionID;
+    }
+
+    public String getShipmentMethod() {
+        return shipmentMethod;
+    }
+
+    public int getReviewProduct() {
+        return reviewProduct;
+    }
+
+    public int getReviewService() {
+        return reviewService;
+    }
+
+    public String getCauseName() {
+        return causeName;
+    }
+
+    public int getUserID() {
+        return userID;
+    }
+
+    public int getClothingID() {
+        return clothingID;
+    }
+}
 
 /*
     //Deze methode annuleert de transactie en voorziet een eventuele terugbetaling.

@@ -36,7 +36,7 @@ public class TransactionDAO {
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Transaction transaction = new Transaction();
+            Transaction transaction = new Transaction(startDate,endDate,transactionID,shipmentMethod,reviewProduct,reviewService,causeName,userID,clothingID);
             return transaction;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -73,12 +73,11 @@ public class TransactionDAO {
                         "WHERE transactionID = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setString(1, transaction.getShipmentMethod());
-                stmt2.setBoolean(2,transaction.getReviewProduct());
-                stmt2.setBoolean(3, transaction.getReviewService());
-                stmt2.setString(4, transaction.getStartDate());
-                stmt2.setInt(5, transaction.getEndDate());
-                // als die set dingen moeten ook nog aangepast worden
-                stmt2.setInt(6, transaction.getcauseName());
+                stmt2.setInt(2,transaction.getReviewProduct());
+                stmt2.setInt(3, transaction.getReviewService());
+                stmt2.setDate(4, (Date) transaction.getStartDate());
+                stmt2.setDate(5, (Date) transaction.getEndDate());
+                stmt2.setString(6, transaction.getCauseName());
                 stmt2.setInt(7, transaction.getUserID());
                 stmt2.setInt(8, transaction.getClothingID());
                 stmt2.executeUpdate();
@@ -87,17 +86,17 @@ public class TransactionDAO {
 
                 String sqlInsert = "INSERT into transaction "
                         + "(shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID) "
-                        + "VALUES (?,?,?,?,?,?,?)";
+                        + "VALUES (?,?,?,?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
-                insertStm.setInt(1, transaction.getShipmentMethod());
-                insertStm.setString(2,transaction.getReviewProduct());
-                insertStm.setBoolean(3,transaction.getReviewService());
-                insertStm.setBoolean(4,transaction.getStartDate());
-                insertStm.setString(5,transaction.getEndDate());
-                insertStm.setString(6,transaction.getcauseName());
+                insertStm.setString(1, transaction.getShipmentMethod());
+                insertStm.setInt(2,transaction.getReviewProduct());
+                insertStm.setInt(3,transaction.getReviewService());
+                insertStm.setDate(4, (Date) transaction.getStartDate());
+                insertStm.setDate(5, (Date) transaction.getEndDate());
+                insertStm.setString(6,transaction.getCauseName());
                 insertStm.setInt(7,transaction.getUserID());
-                insertStm.setInt(7,transaction.getclothingID());
+                insertStm.setInt(8,transaction.getClothingID());
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {
