@@ -55,8 +55,10 @@ public class Clothing {
     public boolean isAvailable(Date wantedStartDate, Date wantedEndDate, int clothingID){
         boolean flag = true;
         for(Transaction t : getTransactionsOfClothing(clothingID))
-            if(!wantedStartDate.after(t.getEndDate()) || !wantedEndDate.before(t.getStartDate()))
+            if (!wantedStartDate.after(t.getEndDate()) || !wantedEndDate.before(t.getStartDate())) {
                 flag = false;
+                break;
+            }
         return flag;
     }
 

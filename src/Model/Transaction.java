@@ -1,7 +1,15 @@
 package Model;
 
+import Database.OwnerDAO;
+import Database.RenterDAO;
+import Database.TransactionDAO;
+
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
+
+import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Transaction {
 
@@ -17,6 +25,7 @@ public class Transaction {
     private Date dateOfTransaction;
 
     private ArrayList<String> ShipmentMethods;
+    OwnerDAO ownerDAO = new OwnerDAO();
 
 
     public Transaction(Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, Date dateOfTransaction) {
@@ -43,6 +52,7 @@ public class Transaction {
     public Date getEndDate() {
         return endDate;
     }
+
 
     public int getTransactionID() {
         return transactionID;
@@ -75,6 +85,35 @@ public class Transaction {
     public Date getDateOfTransaction() {
         return dateOfTransaction;
     }
+    public double getTotalPrice(Clothing c){
+        // extra berekening tussen 2 data
+        double totalPrice = 0;
+        long dateBeforeInMs = startDate.getTime();
+        long dateAfterInMs = endDate.getTime();
+
+        long timeDiff = Math.abs(dateAfterInMs - dateBeforeInMs);
+        int numberOfDaysOfRentPeriod = (int) TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
+        if(c.getClothingID() == clothingID){
+            totalPrice = c.getPrice()*numberOfDaysOfRentPeriod;
+        }
+        return totalPrice;
+    }
+    public String getCauseOfOwner(int userID){
+        String causeOfOwner = null;
+        for(Owner o : ownerDAO.getAllOwners())
+            if(o.getUserID() == userID)
+                causeOfOwner = o.getCauseName();
+        return causeOfOwner;
+    }
+    public double getPercentageToCauseAtTimeOfTransaction(){
+
+    }
+    public void addTransaction( Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, Date dateOfTransaction){
+       Transaction transaction = new Transaction(startDate, endDate,transactionID,shipmentMethod, reviewProduct, reviewService,causeName, userID, clothingID, dateOfTransaction);
+
+        TransactionDAO.save(transaction);
+    }
+
 }
 
 /*
