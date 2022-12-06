@@ -1,25 +1,25 @@
 package Model;
 
+import java.util.ArrayList;
+
 public class Category {
-
-    //Opmerking: kunnen we niet beter gebruik maken van enumeraties? Zo kunnen ze makkelijk gehaald
-    //worden uit andere klassen en moeten er geen ingewikkelde if-else statements en
-    //equalsIgnoreCase()-methodes gebruikt worden binnen de constructor.
     private String categoryName;
-
-    /*
-    private Items item;
-
-
-    public enum Gender{F,M}
-    public enum Size{XS, S, M, L, XL}
-
-    public Category(Gender gender,Items item, Size size){
-        categoryName = gender + "-" + item + "-" + size;
-    }
-    */
-
-    //Getter categoryName
     public String getCategoryName() {return categoryName;}
 
+    private ArrayList<String> categories;
+
+    public Category(String categoryName) {
+        this.categoryName = categoryName;
+        categories= new ArrayList<>();
+        categories.add("Male Suits");
+        categories.add("Male Accessories");
+        categories.add("Female Mini-dress");
+        categories.add("Female Midi-dress");
+        categories.add("Female Maxi-dress");
+        categories.add("Female Pants");
+        categories.add("Female Tops");
+        categories.add("Female accessories");
+    }
+
+    //nog saveCategory voor al die Strings!!
 }

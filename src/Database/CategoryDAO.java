@@ -6,21 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class CategoryDAO {
-    public static void createTables() throws DBException {
-        try {
-            // dit maakt de tabellen aan, de relaties moeten nog wel gelegd
-            // worden via phpmyadmin
-            Connection con = DBHandler.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `category` (\n"
-                    + "  `categoryName` varchar(50) NOT NULL,\n"
-                    + "  PRIMARY KEY (`categoryName`)\n"
-                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public Category getCategory(int stuNum)  {
         //MOET GELINKT WORDEN AAN OWNER, MOET ER IN DE CATEGORY DATABASETABEL DAN OOK GEEN KOLOM USERID ZIJN FSO?
@@ -58,7 +43,7 @@ public class CategoryDAO {
         }
     }
 
-    public void save(Category category)  {
+    public void saveCategory(Category category)  {
         Connection con = null;
         try {
             //Doet gelijk iets nutteloos?

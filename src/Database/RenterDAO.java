@@ -6,33 +6,6 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class RenterDAO {
-    public static void createRenterTable() throws DBException {
-        try {
-            // dit maakt de tabellen aan, de relaties moeten nog wel gelegd
-            // worden via phpmyadmin
-            Connection con = DBHandler.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "CREATE TABLE `renter` ("
-                    + "`userID` int NOT NULL,"
-                    + "`firstName` varchar(50) NOT NULL,"
-                    + "`lastName` varchar(50) NOT NULL,"
-                    + "`email` varchar(50) NOT NULL,"
-                    + "`streetName` varchar(50) NOT NULL,"
-                    + "`streetNumber` int NOT NULL,"
-                    + "`city` varchar(50) NOT NULL,"
-                    + "`zipCode` int NOT NULL,"
-                    + "`phoneNumber` varchar(50) DEFAULT NULL,"
-                    + "`userBirth` date NOT NULL,"
-                    + "PRIMARY KEY (`userid`),"
-                    + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb3";
-            //MOET DIT LAATSTE ER WEL BIJSTAAN?
-            // als je dit wegdoet, ) moet er sws blijven!
-
-            stmt.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public Renter getRenter(String userID) {
         Connection con = null;
@@ -73,7 +46,7 @@ public class RenterDAO {
         }
     }
 
-    public void saveRenter(Renter renter) {
+    public static void saveRenter(Renter renter) {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
@@ -169,7 +142,7 @@ public class RenterDAO {
         return null;
     }
 
-    public void deleteRenter(Renter renter) {
+    public static void deleteRenter(Renter renter) {
         Connection con = null;
         try {
             con = DBHandler.getConnection();

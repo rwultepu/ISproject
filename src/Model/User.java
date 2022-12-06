@@ -1,5 +1,8 @@
 package Model;
 
+import Database.OwnerDAO;
+import Database.RenterDAO;
+
 import java.util.Date;
 
 public class User {
@@ -110,6 +113,18 @@ public class User {
 
         return validUser;
     }
+     */
 
+    public void addUser(){
+        Owner owner = new Owner();
+        Renter renter = new Renter();
+        OwnerDAO.saveOwner();
+        RenterDAO.saveRenter();
+    }
+
+    public void deleteUser(){
+        OwnerDAO.deleteOwner();
+        RenterDAO.deleteRenter();
+    }
 
 }
