@@ -7,8 +7,8 @@ public class Review {
     private ArrayList<Integer> serviceReview;
 
     public Review() {
-        productReview = new ArrayList<>();
-        serviceReview = new ArrayList<>();
+        productReview = new ArrayList<>(5);
+        serviceReview = new ArrayList<>(5);
         productReview.add(1);
         productReview.add(2);
         productReview.add(3);
