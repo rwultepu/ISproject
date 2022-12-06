@@ -118,6 +118,8 @@ public class Owner extends User {
         //gettersToevoegenVoorJDBC
 
 
+     */
+
     public double getSelectedPercentageToCauseOfOwner() {
         return selectedPercentageToCauseOfOwner;
     }
