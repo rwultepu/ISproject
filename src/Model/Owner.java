@@ -1,32 +1,35 @@
-package Application;
+package Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Owner extends User {
 
     private ArrayList<String> reviews;
-    private Cause cause;
-    private double pledge;
+    private String causeName;
+    private double selectedPercentageToCauseOfOwner;
 
     //Opmerking: is het niet logisch als de cause en pledge variabele meegegeven wordt in de
     //constructor zodat deze geïnitialiseerd kan worden?
     public Owner(String firstName, String lastName, String userID, String email, String phoneNumber,
-                 String userBirth, String streetName, int streetNumber, String city, int zipCode,
-                 Cause cause, double pledge){
+                 Date userBirth, String streetName, int streetNumber, String city, int zipCode,
+                 String causeName, double selectedPercentageToCauseOfOwner){
         super(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
                 streetNumber, city, zipCode);
 
         reviews = new ArrayList<>();
-        this.cause = cause;
-        this.pledge = pledge;
+        this.causeName = causeName;
+        this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
     }
 
     //Getter reviews
     public ArrayList<String> getReviews() {return reviews;}
 
-    //Getter cause
-    public Cause getCause() {return cause;}
+    //Getter causeName
+    public String getCauseName() {
+        return causeName;
+    }
 
     //Deze methode retourneert de gemiddelde review score van de gebruiker.
     //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
@@ -81,7 +84,7 @@ public class Owner extends User {
             if(cause == null)
                 throw new Exception();
             else
-                this.cause = cause;
+                this.causeName = cause;
         }
 
         //Deze methode verandert het percentage dat de eigenaar doneert aan
@@ -91,13 +94,13 @@ public class Owner extends User {
                 throw new Exception();
 
             else
-                this.pledge = newPledge;
+                this.selectedPercentageToCauseOfOwner = newPledge;
         }
 
-        public HashMap< ArrayList<Clothing>, Double> bundleClothings(ArrayList<Clothing> bundeledClothings,
+        public HashMap< ArrayList<Clothing>, Double> bundledClothing(ArrayList<Clothing> bundledClothings,
                                                                      double price) {
             HashMap<ArrayList<Clothing>, Double> bundleClothingsAndPrice = new HashMap<>();
-            bundleClothingsAndPrice.put(bundeledClothings, price);
+            bundleClothingsAndPrice.put(bundledClothings, price);
 
             return bundleClothingsAndPrice;
         }
@@ -109,6 +112,13 @@ public class Owner extends User {
             if()
 
         }
+
+        //gettersToevoegenVoorJDBC
+
+
+    public double getSelectedPercentageToCauseOfOwner() {
+        return selectedPercentageToCauseOfOwner;
+    }
 }
 
 

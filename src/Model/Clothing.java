@@ -1,4 +1,4 @@
-package Application;
+package Model;
 
 import java.util.ArrayList;
 
@@ -6,12 +6,14 @@ public class Clothing {
 
     private String clothingID;
     private double price;
-    private Category category;
+    private String categoryName;
+    private String description;
 
-    public Clothing(String clothingID, double price, Category category){
+    public Clothing(String clothingID, double price, String categoryName, String description){
         this.clothingID = clothingID;
         this.price = price;
-        this.category = category;
+        this.categoryName = categoryName;
+        this.description = description;
     }
 
     //Getter clothingID
@@ -20,8 +22,14 @@ public class Clothing {
     //Getter price
     public double getPrice() {return price;}
 
-    //Getter category
-    public Category getCategory() {return category;}
+    //Getter categoryName
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
 
     //Deze methode retourneert aan welk gender het kledingstuk gelinkt is.
     public String getGender(){

@@ -1,6 +1,7 @@
-package Application;
+package Model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 public class Renter extends User {
@@ -9,7 +10,7 @@ public class Renter extends User {
     private HashMap<String, String> historyRentedClothings;
 
     public Renter(String firstName, String lastName, String userID, String email,
-                  String phoneNumber, String userBirth, String streetName,
+                  String phoneNumber, Date userBirth, String streetName,
                   int streetNumber, String city, int zipCode){
         super(firstName, lastName, userID, email, phoneNumber, userBirth,
                 streetName, streetNumber, city, zipCode);
