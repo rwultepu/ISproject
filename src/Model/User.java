@@ -27,6 +27,7 @@ public class User {
 
         this.userID = userID;
 
+
         //Opmerking: Wat gebeurt er als de email niet valid is?
         if(isValidEmail())
             this.email = email;
