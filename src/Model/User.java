@@ -3,26 +3,32 @@ package Model;
 import Database.OwnerDAO;
 import Database.RenterDAO;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class User {
 
     private String firstName;
     private String lastName;
-    private String userID;
+    private int userID;
     private String email;
     private String phoneNumber;
-    private Date userBirth;
+    private LocalDate userBirth;
     private String streetName;
     private int streetNumber;
     private String city;
     private int zipCode;
+    private int counter = 1;
 
-    public User(String firstName, String lastName, String userID, String email, String phoneNumber,
-                Date userBirth, String streetName, int streetNumber, String city, int zipCode){
+    public User(String firstName, String lastName, String email, String phoneNumber,
+                LocalDate userBirth, String streetName, int streetNumber, String city, int zipCode){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userID = userID;
+
+        this.userID = counter;
+        counter++;
+
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
@@ -33,7 +39,7 @@ public class User {
     }
 
     //Getter userID
-    public String getUserID() {return userID;}
+    public int getUserID() {return userID;}
 
     //Getter email
     public String getEmail() {return email;}
@@ -49,7 +55,7 @@ public class User {
         return lastName;
     }
 
-    public Date getUserBirth() {
+    public LocalDate getUserBirth() {
         return userBirth;
     }
 
@@ -84,16 +90,33 @@ public class User {
                 + this.zipCode + " " + this.city;
     }
 
+
     //Deze methode retourneert hoe oud de gebruiker is.
     //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
+
+    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
+        return dateToConvert.toInstant().atZone(hgg.systemDefault()).toLocalDate();
+    }
+
+    public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
+        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
+    }
+     */
+
+    /*Wachten op de mail van Gailly
+
     public int getAge(){
         int ageUser = 0;
 
-        int dag = Integer.parseInt(userBirth.substring(0,1));
+        LocalDate geboorteDatum = convertToLocalDateViaSqlDate(Date userBirth);
+        int dag = userBirth.getDayOfMonth();
+
         int maand = Integer.parseInt(userBirth.substring(3, 4));
         int jaar = Integer.parseInt(userBirth.substring(6,9));
 
         LocalDate geboorteDatum = LocalDate.of(jaar, maand, dag);
+
+        Date huidigeDatum = Date.no
         LocalDate huidigeDatum = LocalDate.now();
 
         if(huidigeDatum.isBefore(geboorteDatum))
@@ -103,23 +126,51 @@ public class User {
 
         return ageUser;
     }
+    */
 
+
+
+    //public ArrayList<Owner> getAllOwners()
+
+    public boolean isValidEmail(String email){
+        boolean validEmail = false;
+        OwnerDAO ownerDao = new OwnerDAO();
+
+        ArrayList<Owner> ownerList = ownerDao.getAllOwners();
+
+        for(Owner owner : ownerList)
+            if((owner.getEmail().equals(email)) && email != null)
+                validEmail = true;
+
+        return validEmail;
+    }
+
+
+    /*
     //Deze methode retourneert of de gebruiker ouder of gelijk aan 16 jaar is.
-    public boolean isValid(){
-        boolean validUser = false;
+    public boolean isValidAge(Date userbirth){
+        boolean validAge = false;
 
-        if(getAge() >= 16)
-            validUser = true;
+        if((getAge() >= 16) && (getAge() <= 100))
+            validAge = true;
 
-        return validUser;
+        return validAge;
     }
      */
 
-    public void addUser(){
+    /*
+    String firstName, String lastName, int userID, String email, String phoneNumber,
+    Date userBirth, String streetName, int streetNumber, String city, int zipCode,
+    String causeName, double selectedPercentageToCauseOfOwner
+    */
+
+    public void addUser(String firstName, String lastName, int userID, String email, String phoneNumber,
+                        Date userBirth, String streetName, int streetNumber, String city, int zipCode,
+                        String causeName, double selectedPercentageToCauseOfOwner){
         Owner owner = new Owner();
         Renter renter = new Renter();
-        OwnerDAO.saveOwner();
-        RenterDAO.saveRenter();
+        OwnerDAO.saveOwner(owner);
+        RenterDAO.saveRenter(renter);
     }
 
     public void deleteUser(){

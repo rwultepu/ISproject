@@ -1,6 +1,5 @@
 package Database;
 
-import Model.Cause;
 import Model.Owner;
 
 import java.sql.*;
@@ -8,7 +7,7 @@ import java.util.ArrayList;
 
 public class OwnerDAO {
 
-    public Owner getOwner(String userID)  {
+    public Owner getOwner(int userID)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
@@ -16,7 +15,7 @@ public class OwnerDAO {
                     + "FROM owner "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
-            stmt.setString(1,userID);
+            stmt.setInt(1,userID);
 
             ResultSet srs = stmt.executeQuery();
             String firstName, lastName, email, phoneNumber, streetName, city, causeName;
@@ -60,7 +59,7 @@ public class OwnerDAO {
                     + "WHERE userID = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sqlSelect);
-            stmt.setString(1,owner.getUserID());
+            stmt.setInt(1,owner.getUserID());
             ResultSet srs = stmt.executeQuery();
             if (srs.next()) {
 
@@ -96,7 +95,7 @@ public class OwnerDAO {
                 stmt2.setString(10, owner.getCauseName());
                 stmt2.setDouble(11, owner.getSelectedPercentageToCauseOfOwner());
 
-                stmt2.setString(12, owner.getUserID());
+                stmt2.setInt(12, owner.getUserID());
 
                 stmt2.executeUpdate();
             } else {
@@ -110,7 +109,7 @@ public class OwnerDAO {
                 insertStm.setString(1, owner.getFirstName());
                 //Er moet bij owner een getFirstName en getLastName komen zodat hier kan setten...
                 insertStm.setString(2, owner.getLastName());
-                insertStm.setString(3, owner.getUserID());
+                insertStm.setInt(3, owner.getUserID());
                 insertStm.setString(4, owner.getEmail());
                 insertStm.setString(5, owner.getPhoneNumber());
                 insertStm.setDate(6, (Date) owner.getUserBirth());
@@ -142,7 +141,7 @@ public class OwnerDAO {
             ResultSet srs = stmt.executeQuery(sql);
             ArrayList<Owner> owners = new ArrayList<Owner>();
             while (srs.next())
-                owners.add(getOwner(srs.getString("userID")));
+                owners.add(getOwner(srs.getInt("userID")));
             return owners;
         } catch (DBException dbe) {
             dbe.printStackTrace();
@@ -161,7 +160,7 @@ public class OwnerDAO {
             String sql ="DELETE FROM owner "
                     + "WHERE userID = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
-            stmt.setString(1,owner.getUserID());
+            stmt.setInt(1,owner.getUserID());
 
             stmt.executeUpdate();
         } catch (DBException dbe) {
