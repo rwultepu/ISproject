@@ -8,6 +8,7 @@ public class Transaction {
 
     private Date startDate;
     private Date endDate;
+    /*
     private ArrayList<User> owners;
     private ArrayList<User> renters;
     private String userIDOwner;
@@ -16,7 +17,7 @@ public class Transaction {
     private Renter renter;
 
     private ArrayList<Clothing> clothingsForTransaction;
-
+*/
 
     public Transaction(String userIDOwner, String userIDRenter, Date endDate, Date startDate){
 
@@ -27,7 +28,7 @@ public class Transaction {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-
+/*
     public Owner getOwner(String userIDOwner){
 
     }

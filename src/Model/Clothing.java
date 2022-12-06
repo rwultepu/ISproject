@@ -32,6 +32,7 @@ public class Clothing {
     }
 
     //Deze methode retourneert aan welk gender het kledingstuk gelinkt is.
+    /*
     public String getGender(){
         String gender = "male";
         String genderRetreval = getCategory().getCategoryName().substring(0,0);
@@ -45,4 +46,6 @@ public class Clothing {
         ArrayList<Transaction> previousTransactions;
 
         return previousTransactions;
+
+     */
 }
