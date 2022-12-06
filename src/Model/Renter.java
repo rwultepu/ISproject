@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 public class Renter extends User {
 
-    private HashMap<String, String> purchaseClothings;
-    private HashMap<String, String> historyRentedClothings;
+    //private HashMap<String, String> purchaseClothings;
+    //private HashMap<String, String> historyRentedClothings;
 
     public Renter(String firstName, String lastName, String userID, String email,
                   String phoneNumber, Date userBirth, String streetName,
@@ -18,6 +18,8 @@ public class Renter extends User {
         purchaseClothings = new HashMap<>();
         historyRentedClothings = new HashMap<>();
     }
+
+    /*
 
     //Deze methode
     public void purchaseClothings(){

@@ -6,7 +6,8 @@ import java.util.HashMap;
 
 public class Owner extends User {
 
-    private ArrayList<String> reviews;
+
+    //private ArrayList<String> reviews;
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
 
@@ -24,7 +25,7 @@ public class Owner extends User {
     }
 
     //Getter reviews
-    public ArrayList<String> getReviews() {return reviews;}
+    //public ArrayList<String> getReviews() {return reviews;}
 
     //Getter causeName
     public String getCauseName() {
@@ -33,6 +34,7 @@ public class Owner extends User {
 
     //Deze methode retourneert de gemiddelde review score van de gebruiker.
     //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
+    /*
     public double averageReviewScore(){
         double averageReviewScore = 0.0;
 
