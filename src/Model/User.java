@@ -54,7 +54,7 @@ public class User {
         return lastName;
     }
 
-    public LocalDate getUserBirth() {
+    public Date getUserBirth() {
         return userBirth;
     }
 
