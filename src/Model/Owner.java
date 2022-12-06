@@ -11,6 +11,8 @@ public class Owner extends User {
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
 
+    TransactionDAO transactionDAO = new TransactionDAO();
+
     public Owner(String firstName, String lastName, String userID, String email, String phoneNumber,
                  Date userBirth, String streetName, int streetNumber, String city, int zipCode,
                  String causeName, double selectedPercentageToCauseOfOwner){
@@ -31,13 +33,11 @@ public class Owner extends User {
 
     public double getTotalRevenueOfTheMonth(){
         double totalRenvenueOfTheMonth = 0.0;
-        for(Transaction transactions1Per1: TransactionDAO.getAllTransactions){
+        for(Transaction transactions1Per1: transactionDAO.getAllTransactions()){
 
         }
+        return totalRenvenueOfTheMonth;
     }
-
-
-
 
 }
 
