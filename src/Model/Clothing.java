@@ -1,17 +1,18 @@
 package Model;
 
-import java.util.ArrayList;
-
 public class Clothing {
 
     private String clothingID;
     private double price;
+
+    private int userID;
     private String categoryName;
     private String description;
 
-    public Clothing(String clothingID, double price, String categoryName, String description){
+    public Clothing(String clothingID, double price, int userID, String categoryName, String description){
         this.clothingID = clothingID;
         this.price = price;
+        this.userID = userID;
         this.categoryName = categoryName;
         this.description = description;
     }
@@ -29,6 +30,10 @@ public class Clothing {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getUserID() {
+        return userID;
     }
 
     //Deze methode retourneert aan welk gender het kledingstuk gelinkt is.
