@@ -19,20 +19,17 @@ public class User {
     private int streetNumber;
     private String city;
     private int zipCode;
+    private int counter = 1;
 
-    public User(String firstName, String lastName, int userID, String email, String phoneNumber,
+    public User(String firstName, String lastName, String email, String phoneNumber,
                 LocalDate userBirth, String streetName, int streetNumber, String city, int zipCode){
         this.firstName = firstName;
         this.lastName = lastName;
 
-        this.userID = userID;
+        this.userID = counter;
+        counter++;
 
-
-        //Opmerking: Wat gebeurt er als de email niet valid is?
-        if(isValidEmail())
-            this.email = email;
-
-
+        this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
         this.streetName = streetName;
@@ -42,7 +39,7 @@ public class User {
     }
 
     //Getter userID
-    public String getUserID() {return userID;}
+    public int getUserID() {return userID;}
 
     //Getter email
     public String getEmail() {return email;}
@@ -93,9 +90,6 @@ public class User {
                 + this.zipCode + " " + this.city;
     }
 
-     */
-
-    //As of JDK version 1.1, replaced by Calendar.get(Calendar.DAY_OF_WEEK)
 
     //Deze methode retourneert hoe oud de gebruiker is.
     //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
@@ -107,6 +101,7 @@ public class User {
     public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
         return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
     }
+     */
 
     /*Wachten op de mail van Gailly
 
@@ -164,12 +159,14 @@ public class User {
      */
 
     /*
-    String firstName, String lastName, String userID, String email, String phoneNumber,
+    String firstName, String lastName, int userID, String email, String phoneNumber,
     Date userBirth, String streetName, int streetNumber, String city, int zipCode,
     String causeName, double selectedPercentageToCauseOfOwner
     */
 
-    public void addUser(String firstName, String lastName, int userID){
+    public void addUser(String firstName, String lastName, int userID, String email, String phoneNumber,
+                        Date userBirth, String streetName, int streetNumber, String city, int zipCode,
+                        String causeName, double selectedPercentageToCauseOfOwner){
         Owner owner = new Owner();
         Renter renter = new Renter();
         OwnerDAO.saveOwner();
