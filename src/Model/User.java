@@ -14,7 +14,7 @@ public class User {
     private int userID;
     private String email;
     private String phoneNumber;
-    private LocalDate userBirth;
+    private Date userBirth;
     private String streetName;
     private int streetNumber;
     private String city;
@@ -22,10 +22,12 @@ public class User {
     private int counter = 1;
 
     public User(String firstName, String lastName, int userID, String email, String phoneNumber,
-                LocalDate userBirth, String streetName, int streetNumber, String city, int zipCode){
+                Date userBirth, String streetName, int streetNumber, String city, int zipCode){
         this.firstName = firstName;
         this.lastName = lastName;
-        this.userID = userID;
+
+        this.userID = counter;
+
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
@@ -164,12 +166,13 @@ public class User {
     public void addUser(String firstName, String lastName, int userID, String email, String phoneNumber,
                         Date userBirth, String streetName, int streetNumber, String city, int zipCode,
                         String causeName, double selectedPercentageToCauseOfOwner){
+        User user = new User(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode);
         Owner owner = new Owner(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
                 streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
-        Renter renter = new Renter(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
-                streetNumber);
+        Renter renter = new Renter(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode);
         OwnerDAO.saveOwner(owner);
         RenterDAO.saveRenter(renter);
+        counter++;
     }
 
     public void deleteUser(){
