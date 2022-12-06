@@ -1,5 +1,5 @@
 package Model;
 
 public enum Review {
-    X, XX, XXX, XXXX, XXXXX
+   // X, XX, XXX, XXXX, XXXXX
 }

@@ -1,6 +1,5 @@
 package Model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class User {
@@ -69,6 +68,8 @@ public class User {
 
     //Deze methode retourneert de volledige naam van de gebruiker.
     //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
+
+    /*
     public String getName(){
         return this.firstName + " " + this.lastName;
     }
