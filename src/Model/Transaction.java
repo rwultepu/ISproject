@@ -14,11 +14,12 @@ public class Transaction {
     private String causeName;
     private int userID;
     private int clothingID;
+    private Date dateOfTransaction;
 
     private ArrayList<String> ShipmentMethods;
 
 
-    public Transaction(Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID) {
+    public Transaction(Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, Date dateOfTransaction) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.transactionID = transactionID;
@@ -28,6 +29,7 @@ public class Transaction {
         this.causeName = causeName;
         this.userID = userID;
         this.clothingID = clothingID;
+        this.dateOfTransaction = dateOfTransaction;
         String pickup = "Pick-Up";
         String homedelivery = "Home-Delivery";
         ShipmentMethods.add(pickup);
@@ -68,6 +70,10 @@ public class Transaction {
 
     public int getClothingID() {
         return clothingID;
+    }
+
+    public Date getDateOfTransaction() {
+        return dateOfTransaction;
     }
 }
 
