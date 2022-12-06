@@ -28,7 +28,7 @@ public class Transaction {
         this.startDate = startDate;
         this.endDate = endDate;
     }
-/*
+
     public Owner getOwner(String userIDOwner){
 
     }
@@ -37,7 +37,7 @@ public class Transaction {
 
     }
 
-
+/*
     //Deze methode annuleert de transactie en voorziet een eventuele terugbetaling.
     public boolean cancelTransaction(){
 
