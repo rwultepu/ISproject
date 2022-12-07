@@ -27,7 +27,7 @@ public class Transaction {
     private int clothingID;
     private String dateOfTransaction;
 
-    private ArrayList<String> ShipmentMethods;
+    private ArrayList<String> shipmentMethods;
     OwnerDAO ownerDAO = new OwnerDAO();
     ClothingDAO clothingDAO = new ClothingDAO();
 
@@ -45,8 +45,8 @@ public class Transaction {
         this.dateOfTransaction = dateOfTransaction;
         String pickup = "Pick-Up";
         String homedelivery = "Home-Delivery";
-        ShipmentMethods.add(pickup);
-        ShipmentMethods.add(homedelivery);
+        shipmentMethods.add(pickup);
+        shipmentMethods.add(homedelivery);
     }
 
     public String getStartDate() {
