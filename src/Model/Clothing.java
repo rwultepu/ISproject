@@ -129,11 +129,7 @@ public class Clothing {
 
     public ArrayList<Clothing> getClothingWithSpecificParameters(String wantedStartdate, String wantedEndDate, Category category){
         ArrayList<Clothing> clothingWithSpecificParameter = new ArrayList<>();
-
-        LocalDate wantedStartDateLD = stringToLocalDate(wantedStartdate);
-        LocalDate wantedEndDateLD = stringToLocalDate(wantedEndDate);
-
-        for(Clothing clothing : getAvailableClothing(wantedStartDateLD, wantedEndDateLD))
+        for(Clothing clothing : getAvailableClothing(wantedStartdate, wantedEndDate))
             if(clothing.getCategoryName().equals(category.getCategoryName()))
                 clothingWithSpecificParameter.add(clothing);
 

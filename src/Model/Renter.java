@@ -39,12 +39,24 @@ public class  Renter extends User {
         return topOwners;
     }
 
-    public ArrayList<ArrayList<Clothing>> getAllRecommendedClothing(int userID){
-        ArrayList<ArrayList<Clothing>> recommendedClothing=new ArrayList<>();
+    public ArrayList<Clothing> getAllRecommendedClothing(int userID){
+        ArrayList<Clothing> recommendedClothing=new ArrayList<>();
         for(Owner o: getTopOwners())
             if(getTopOwners().contains(o))
                 recommendedClothing.add(o.getAllClothesOfOwner());
         return recommendedClothing;
+    }
+
+    //DEZE METHODES MOETEN NOG GEMAAKT WORDEN
+    public boolean setProductReview(Transaction transaction, Review review){
+        //niet zeker of dit klopt
+        return true;
+    }
+    public boolean setServiceReview(Transaction transaction, Review review){
+        return true;
+    }
+    public boolean setShipmentMethod (Transaction transaction, Review review){
+        return true;
     }
 
 }
