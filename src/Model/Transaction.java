@@ -194,19 +194,17 @@ public class Transaction {
         return stringToLocalDate;
     }
 
-}
-
-/*
-    //Deze methode annuleert de transactie en voorziet een eventuele terugbetaling.
-    public boolean cancelTransaction(){
-
+    //DEZE METHODES MOETEN NOG GEMAAKT WORDEN
+    public boolean setProductReview(Review review){
+        reviewProduct = getReviewProduct();
+        return true;
     }
-
-    //Getter owners
-    public ArrayList<User> getOwners() {return owners;}
-
-    //Getter renters
-    public ArrayList<User> getRenters() {return renters;}
-
-
-} */
+    public boolean setServiceReview(Review review){
+        reviewService = getReviewService();
+        return true;
+    }
+    public boolean setShipmentMethod (String shipmentMethod){
+        this.shipmentMethod = shipmentMethod;
+        return true;
+    }
+}
