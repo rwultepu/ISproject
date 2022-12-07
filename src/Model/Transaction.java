@@ -28,7 +28,7 @@ public class Transaction {
     ClothingDAO clothingDAO = new ClothingDAO();
 
 
-    public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction, double amountToCause) {
+    public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.transactionID = transactionID;
@@ -43,7 +43,7 @@ public class Transaction {
         String homedelivery = "Home-Delivery";
         shipmentMethods.add(pickup);
         shipmentMethods.add(homedelivery);
-        this.amountToCause = amountToCause;
+        this.amountToCause = 0;
     }
 
     public String getStartDate() {
@@ -118,9 +118,18 @@ public class Transaction {
     }
 
     public double getPercentageToCauseAtTimeOfTransaction(){
-
+        double percentageToCauseAtTimeOfTransaction = 0.0;
+        for(Owner o : ownerDAO.getAllOwners()){
+            for(Clothing c : o.getAllClothesOfOwner())
+                if (c.getClothingID() == clothingID) {
+                    percentageToCauseAtTimeOfTransaction = o.getSelectedPercentageToCauseOfOwner();
+                    break;
+                }
+        }
+        return percentageToCauseAtTimeOfTransaction;
     }
     public boolean addTransaction(Transaction transactionInput){
+        transactionInput.amountToCause = transactionInput.getTotalPrice()*getPercentageToCauseAtTimeOfTransaction();
         TransactionDAO.save(transactionInput);
         return true;
     }
