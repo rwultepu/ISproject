@@ -4,6 +4,7 @@ import Database.OwnerDAO;
 import Database.RenterDAO;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class User {
@@ -21,11 +22,8 @@ public class User {
     private int counter = 1;
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
-    private int lDay;
-    private int lMonth;
-    private int lYear;
 
-// Constructor voor een owner
+    // Constructor voor een owner
     public User(String firstName, String lastName, String email, String phoneNumber,
                 String userBirth, String streetName, int streetNumber, String city, int zipCode, String causeName, double selectedPercentageToCauseOfOwner){
         this.firstName = firstName;
@@ -41,7 +39,8 @@ public class User {
         this.causeName = causeName;
         this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
     }
-// Constructor voor een renter
+
+    // Constructor voor een renter
     public User(String firstName, String lastName, String email, String phoneNumber, String userBirth, String streetName, int streetNumber, String city, int zipCode) {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -57,7 +56,6 @@ public class User {
 
     //Getter userID
     public int getUserID() {return userID;}
-
     //Getter email
     public String getEmail() {return email;}
     //Getter phoneNumber
@@ -73,32 +71,6 @@ public class User {
     public double getSelectedPercentageToCauseOfOwner() {return selectedPercentageToCauseOfOwner;}
     public void setSelectedPercentageToCauseOfOwner(double selectedPercentageToCauseOfOwner) {this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;}
 
-
-/*
-    public int getAge(){
-        int ageUser = 0;
-
-        LocalDate geboorteDatum = convertToLocalDateViaSqlDate(Date userBirth);
-        int dag = userBirth.getDayOfMonth();
-
-        int maand = Integer.parseInt(userBirth.substring(3, 4));
-        int jaar = Integer.parseInt(userBirth.substring(6,9));
-
-        LocalDate geboorteDatum = LocalDate.of(jaar, maand, dag);
-
-        Date huidigeDatum = Date.no
-        LocalDate huidigeDatum = LocalDate.now();
-
-        if(huidigeDatum.isBefore(geboorteDatum))
-            ageUser = jaar;
-        else if ((huidigeDatum.isAfter(geboorteDatum)) || huidigeDatum.isEqual(geboorteDatum))
-            ageUser = jaar + 1;
-
-        return ageUser;
-    }
-    */
-
-
     public boolean isValidDate(String date){
         boolean flag = false;
 
@@ -107,7 +79,6 @@ public class User {
         int yearString = Integer.parseInt(date.substring(6,9));
 
         boolean leapYear = (yearString%4 == 0);
-
 
         if(leapYear){
             if((yearString%100 == 0) && (yearString%400 !=0))
@@ -159,29 +130,6 @@ public class User {
         return stringToLocalDate;
     }
 
-    /*
-    int ageUser = 0;
-
-        LocalDate geboorteDatum = convertToLocalDateViaSqlDate(Date userBirth);
-        int dag = userBirth.getDayOfMonth();
-
-        int maand = Integer.parseInt(userBirth.substring(3, 4));
-        int jaar = Integer.parseInt(userBirth.substring(6,9));
-
-        LocalDate geboorteDatum = LocalDate.of(jaar, maand, dag);
-
-        Date huidigeDatum = Date.no
-        LocalDate huidigeDatum = LocalDate.now();
-
-        if(huidigeDatum.isBefore(geboorteDatum))
-            ageUser = jaar;
-        else if ((huidigeDatum.isAfter(geboorteDatum)) || huidigeDatum.isEqual(geboorteDatum))
-            ageUser = jaar + 1;
-
-        return ageUser;
-     */
-
-
     public boolean isValidEmail(String email){
         boolean validEmail = false;
         OwnerDAO ownerDao = new OwnerDAO();
@@ -195,19 +143,19 @@ public class User {
         return validEmail;
     }
 
+    public boolean isValidAge(){
+        boolean flag = false;
 
-    /*
-    //Deze methode retourneert of de gebruiker ouder of gelijk aan 16 jaar is.
-    public boolean isValidAge(Date userbirth){
-        boolean validAge = false;
+        LocalDate dateNow = LocalDate.now();
+        LocalDate userBirth = stringToLocalDate(this.userBirth);
 
-        if((getAge() >= 16) && (getAge() <= 100))
-            validAge = true;
+        long yearsBetweenUserBirthAndDateNow = ChronoUnit.YEARS.between(dateNow, userBirth);
 
-        return validAge;
+        if((yearsBetweenUserBirthAndDateNow >= 16))
+            return flag = true;
+
+        return flag;
     }
-     */
-
 
     // Wegschrijven van UserObject naar database
     public void addUser(User userInput){
@@ -229,5 +177,4 @@ public class User {
         OwnerDAO.deleteOwner(owner);
         RenterDAO.deleteRenter(renter);
     }
-
 }
