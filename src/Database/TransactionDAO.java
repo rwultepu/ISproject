@@ -39,7 +39,7 @@ public class TransactionDAO {
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Transaction transaction = new Transaction(startDate,endDate,transactionID,shipmentMethod,reviewProduct,reviewService,causeName,userID,clothingID,dateOfTransaction, amountToCause);
+            Transaction transaction = new Transaction(startDate,endDate,transactionID,shipmentMethod,reviewProduct,reviewService,causeName,userID,clothingID,dateOfTransaction);
             return transaction;
         } catch (Exception ex) {
             ex.printStackTrace();

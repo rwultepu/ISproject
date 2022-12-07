@@ -43,7 +43,7 @@ public class Transaction {
         String homedelivery = "Home-Delivery";
         shipmentMethods.add(pickup);
         shipmentMethods.add(homedelivery);
-        this.amountToCause = 0;
+        this.amountToCause = getPercentageToCauseAtTimeOfTransaction()*getTotalPrice();
     }
 
     public String getStartDate() {
@@ -129,7 +129,6 @@ public class Transaction {
         return percentageToCauseAtTimeOfTransaction;
     }
     public boolean addTransaction(Transaction transactionInput){
-        transactionInput.amountToCause = transactionInput.getTotalPrice()*getPercentageToCauseAtTimeOfTransaction();
         TransactionDAO.save(transactionInput);
         return true;
     }
