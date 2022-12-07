@@ -61,7 +61,7 @@ public class RenterDAO {
             if (srs.next()) {
 
                 // UPDATE
-                String sqlUpdate = "UPDATE owner " +
+                String sqlUpdate = "UPDATE renter " +
                         "SET firstName = ? ," +
                         " lastName = ? , " +
                         " email = ? , " +
