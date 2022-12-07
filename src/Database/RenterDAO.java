@@ -64,7 +64,7 @@ public class RenterDAO {
                 String sqlUpdate = "UPDATE owner " +
                         "SET firstName = ? ," +
                         " lastName = ? , " +
-                        " email = ? " +
+                        " email = ? , " +
                         " phoneNumber = ? , " +
                         " userBirth = ? , " +
                         " streetName = ? , " +
