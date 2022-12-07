@@ -99,8 +99,6 @@ public class User {
     */
 
 
-    //public ArrayList<Owner> getAllOwners()
-    //date: dd/mm/yyyy
     public boolean isValidDate(String date){
         boolean flag = false;
 
