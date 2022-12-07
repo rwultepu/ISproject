@@ -198,14 +198,15 @@ public class User {
         RenterDAO.saveRenter(renter);
         counter++;
     }
-
-    //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
-    /*
+    
+//Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
     public void deleteUser(User userInput){
-        OwnerDAO.deleteOwner(userInput);
-        RenterDAO.deleteRenter(userInput);
+        Owner owner = new Owner(userInput.firstName,userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
+                userInput.streetNumber, userInput.city, userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
+        Renter renter = new Renter(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
+                userInput.streetNumber, userInput.city, userInput.zipCode);
+        OwnerDAO.deleteOwner(owner);
+        RenterDAO.deleteRenter(renter);
     }
-
-     */
 
 }
