@@ -36,7 +36,6 @@ public class CauseDAO {
     public void saveCause (Cause cause)  {
         Connection con = null;
         try {
-            //Doet gelijk iets nutteloos?
             con = DBHandler.getConnection();
 
             // INSERT

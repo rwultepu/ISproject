@@ -74,7 +74,7 @@ public class OwnerDAO {
                         " streetNumber = ? , " +
                         " city = ? , " +
                         " zipCode = ? , " +
-                        " cause = ? , " +
+                        " causeName = ? , " +
                         " selectedPercentageToCauseOfOwner = ? " +
                         "WHERE userID = ?";
 
