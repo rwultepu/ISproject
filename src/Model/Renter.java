@@ -30,21 +30,24 @@ public class  Renter extends User {
         return transactionHistoryOfRenter;
     }
 
-
+    // Geeft een ArrayList terug met alle owners die goed (>=4) scoren op de reviews
     public ArrayList<Owner> getTopOwners(){
         ArrayList<Owner> topOwners = new ArrayList<>();
         for(Owner o: ownerDAO.getAllOwners())
-            if(o.getAverageProductReviewScore()>=3 && o.getAverageServiceReviewScore()>=3)
+            if(o.getAverageProductReviewScore()>= 4 && o.getAverageServiceReviewScore()>= 4)
                 topOwners.add(o);
         return topOwners;
     }
 
-    public ArrayList<Clothing> getAllRecommendedClothing(int userID){
-        ArrayList<Clothing> recommendedClothing=new ArrayList<>();
-        for(Owner o: getTopOwners())
-            if(getTopOwners().contains(o))
-                recommendedClothing.add(o.getAllClothesOfOwner());
-        return recommendedClothing;
+    //Geeft Arraylist met clothing van de topowners terug voor de recommendedFeed
+    public ArrayList<Clothing> getAllRecommendedClothing(){
+        ArrayList<Clothing> allRecommendedClothing = new ArrayList<>();
+        for(Owner o: getTopOwners()){
+            for(Clothing clothingsPerOwner1Per1: o.getAllClothesOfOwner()){
+                allRecommendedClothing.add(clothingsPerOwner1Per1);
+            }
+        }
+        return allRecommendedClothing;
     }
 
     //DEZE METHODES MOETEN NOG GEMAAKT WORDEN
