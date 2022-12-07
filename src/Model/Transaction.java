@@ -2,16 +2,11 @@ package Model;
 
 import Database.ClothingDAO;
 import Database.OwnerDAO;
-import Database.RenterDAO;
 import Database.TransactionDAO;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
-
-import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Transaction {
 
@@ -28,11 +23,12 @@ public class Transaction {
     private String dateOfTransaction;
 
     private ArrayList<String> shipmentMethods;
+    private double amountToCause;
     OwnerDAO ownerDAO = new OwnerDAO();
     ClothingDAO clothingDAO = new ClothingDAO();
 
 
-    public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction) {
+    public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction, double amountToCause) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.transactionID = transactionID;
@@ -47,6 +43,7 @@ public class Transaction {
         String homedelivery = "Home-Delivery";
         shipmentMethods.add(pickup);
         shipmentMethods.add(homedelivery);
+        this.amountToCause = amountToCause;
     }
 
     public String getStartDate() {
@@ -90,6 +87,10 @@ public class Transaction {
         return dateOfTransaction;
     }
 
+    public double getAmountToCause() {
+        return amountToCause;
+    }
+
     public double getTotalPrice(){
         LocalDate startDateLD = stringToLocalDate(startDate);
         LocalDate endDateLD = stringToLocalDate(endDate);
@@ -97,10 +98,11 @@ public class Transaction {
         double totalPrice = 0.0;
         for(Clothing c : clothingDAO.getAllClothing())
             if(c.getClothingID() == clothingID)
-                totalPrice = c.getPrice()*numberOfDaysOfRentPeriod - ;
+                totalPrice = c.getPrice()*numberOfDaysOfRentPeriod;
         return totalPrice;
     }
 
+    // is deze wel nodig?:
     public String getCauseOfOwner(){
         String causeOfOwner = null;
         boolean flag = false;
