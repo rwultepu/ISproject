@@ -30,17 +30,11 @@ public class Clothing {
     public double getPrice() {return price;}
 
     //Getter categoryName
-    public String getCategoryName() {
-        return categoryName;
-    }
+    public String getCategoryName() {return categoryName;}
 
-    public String getDescription() {
-        return description;
-    }
+    public String getDescription() {return description;}
 
-    public int getUserID() {
-        return userID;
-    }
+    public int getUserID() {return userID;}
 
 
     public ArrayList<Transaction> getTransactionsOfClothing(int clothingID){

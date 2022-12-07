@@ -39,14 +39,6 @@ public class CategoryDAO {
         try {
             con = DBHandler.getConnection();
 
-            String sqlSelect = "SELECT categoryName "
-                    + "FROM category "
-                    + "WHERE categoryName = ? ";
-
-            PreparedStatement stmt = con.prepareStatement(sqlSelect);
-            stmt.setString(1,category.getCategoryName());
-            ResultSet srs = stmt.executeQuery();
-
             String sqlInsert = "INSERT into category "
                     + "(categoryName) "
                     + "VALUES (?)";
@@ -71,7 +63,7 @@ public class CategoryDAO {
             ResultSet srs = stmt.executeQuery(sql);
             ArrayList<Category> categories = new ArrayList<Category>();
             while (srs.next())
-                categories.add(getCategory(srs.getInt("categoryName")));
+                categories.add(getCategory(srs.getString("categoryName")));
             return categories;
         } catch (DBException dbe) {
             dbe.printStackTrace();
