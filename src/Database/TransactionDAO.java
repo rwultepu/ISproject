@@ -11,7 +11,7 @@ public class TransactionDAO {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
-            String sql1 = "SELECT shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID, dateOfTransaction "
+            String sql1 = "SELECT shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID, dateOfTransaction , amountToCause"
                     + "FROM transaction "
                     + "WHERE transactionID = ?";
             PreparedStatement stmt = con.prepareStatement(sql1);
@@ -22,6 +22,7 @@ public class TransactionDAO {
             int reviewProduct, reviewService, userID, clothingID;
             String startDate, endDate, dateOfTransaction;
             String causeName;
+            double amountToCause;
 
             if (srs.next()) {
                 shipmentMethod = srs.getString("shipmentMethod");
@@ -33,11 +34,12 @@ public class TransactionDAO {
                 userID = srs.getInt("userID");
                 clothingID = srs.getInt("clothingID");
                 dateOfTransaction = srs.getString("dateOfTransaction");
+                amountToCause = srs.getDouble("amountToCause");
 
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Transaction transaction = new Transaction(startDate,endDate,transactionID,shipmentMethod,reviewProduct,reviewService,causeName,userID,clothingID,dateOfTransaction);
+            Transaction transaction = new Transaction(startDate,endDate,transactionID,shipmentMethod,reviewProduct,reviewService,causeName,userID,clothingID,dateOfTransaction, amountToCause);
             return transaction;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -72,6 +74,7 @@ public class TransactionDAO {
                         " userID = ? , " +
                         " clothingID = ? , " +
                         " dateOfTransaction = ? , " +
+                        "amountToCause = ? ," +
                         "WHERE transactionID = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setString(1, transaction.getShipmentMethod());
@@ -81,15 +84,16 @@ public class TransactionDAO {
                 stmt2.setString(5, transaction.getEndDate());
                 stmt2.setString(6, transaction.getCauseName());
                 stmt2.setInt(7, transaction.getUserID());
-                stmt2.setString(8, transaction.getDateOfTransaction());
-                stmt2.setInt(9, transaction.getClothingID());
+                stmt2.setInt(8, transaction.getClothingID());
+                stmt2.setString(9, transaction.getDateOfTransaction());
+                stmt2.setDouble(10, transaction.getAmountToCause());
                 stmt2.executeUpdate();
             } else {
                 // INSERT
 
                 String sqlInsert = "INSERT into transaction "
-                        + "(shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID,dateOfTransaction) "
-                        + "VALUES (?,?,?,?,?,?,?,?,?)";
+                        + "(shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID,dateOfTransaction, amountToCause) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
                 insertStm.setString(1, transaction.getShipmentMethod());
@@ -100,7 +104,8 @@ public class TransactionDAO {
                 insertStm.setString(6,transaction.getCauseName());
                 insertStm.setInt(7,transaction.getUserID());
                 insertStm.setInt(8,transaction.getClothingID());
-                insertStm.setString(8, transaction.getDateOfTransaction());
+                insertStm.setString(9, transaction.getDateOfTransaction());
+                insertStm.setDouble(10, transaction.getAmountToCause());
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {
