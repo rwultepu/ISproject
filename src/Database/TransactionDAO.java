@@ -64,8 +64,9 @@ public class TransactionDAO {
             if (srs.next()) {
 
                 // UPDATE
-                String sqlUpdate = "UPDATE transactionID " +
-                        "SET shipmentMethod = ? ," +
+                String sqlUpdate = "UPDATE transaction " +
+                        "SET transactionID = ? ," +
+                        " shipmentMethod = ? , " +
                         " reviewProduct = ? , " +
                         " reviewService = ? , " +
                         " startDate = ? , " +
