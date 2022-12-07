@@ -111,8 +111,8 @@ public class Transaction {
     }
 
      */
-    public void addTransaction( Transaction transaction){
-        TransactionDAO.save(transaction);
+    public void addTransaction(Transaction transactionInput){
+        TransactionDAO.save(transactionInput);
     }
 
 }

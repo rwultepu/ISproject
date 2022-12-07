@@ -20,7 +20,6 @@ public class User {
     private String city;
     private int zipCode;
     private int counter = 1;
-
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
 // Constructor voor een owner
@@ -190,9 +189,8 @@ public class User {
     Date userBirth, String streetName, int streetNumber, String city, int zipCode,
     String causeName, double selectedPercentageToCauseOfOwner
     */
-
+// Wegschrijven van UserObject naar database
     public void addUser(User userInput){
-        User user = new User(userInput.firstName,userInput.lastName,userInput.email,userInput.phoneNumber,userInput.userBirth,userInput.streetName,userInput.streetNumber,userInput.city,userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
         Owner owner = new Owner(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
                 userInput.streetNumber, userInput.city, userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
         Renter renter = new Renter(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
@@ -203,9 +201,9 @@ public class User {
     }
 
     //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
-    /*public void deleteUser(){
+    public void deleteUser(){
         OwnerDAO.deleteOwner();
         RenterDAO.deleteRenter();
-    }*/
+    }
 
 }
