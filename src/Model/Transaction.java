@@ -106,7 +106,7 @@ public class Transaction {
         return causeOfOwner;
     }
     public double getPercentageToCauseAtTimeOfTransaction(){
-
+        return null;
     }
     public void addTransaction( Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, Date dateOfTransaction){
        Transaction transaction = new Transaction(startDate, endDate,transactionID,shipmentMethod, reviewProduct, reviewService,causeName, userID, clothingID, dateOfTransaction);
@@ -129,4 +129,4 @@ public class Transaction {
     public ArrayList<User> getRenters() {return renters;}
 
 
-}
+ */

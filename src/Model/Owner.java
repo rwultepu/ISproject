@@ -46,8 +46,9 @@ public class Owner extends User {
                 clothingsOfOwner.add(clothings1Per1);
             }
         }
+        return clothingsOfOwner;
     }
-
+/*
     public double getTotalRevenueOfTheMonth(){
         double totalRenvenueOfTheMonth = 0.0;
         for(Transaction transactions1Per1: transactionDAO.getAllTransactions()){
@@ -75,8 +76,12 @@ public class Owner extends User {
             for(int clothingIDsOfOwner1Per1: owner.getAllClothesOfOwner().)
         }
     }
+*/
 
-
+    public static void main(String[] args) {
+        OwnerDAO ownerDAO1 = new OwnerDAO();
+        System.out.println(ownerDAO1.getAllOwners());
+    }
 
 }
 

@@ -177,9 +177,12 @@ public class User {
     }
 
     //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
+   /*
     public void deleteUser(){
         OwnerDAO.deleteOwner();
         RenterDAO.deleteRenter();
     }
+
+    */
 
 }

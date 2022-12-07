@@ -1,7 +1,5 @@
 package Database;
 
-
-import Model.Category;
 import Model.Cause;
 
 import java.sql.*;
@@ -41,37 +39,16 @@ public class CauseDAO {
             //Doet gelijk iets nutteloos?
             con = DBHandler.getConnection();
 
-            String sqlSelect = "SELECT causeName "
-                    + "FROM cause "
-                    + "WHERE causeName = ? ";
+            // INSERT
 
-            PreparedStatement stmt = con.prepareStatement(sqlSelect);
-            stmt.setString(1,cause.getCauseName());
-            ResultSet srs = stmt.executeQuery();
-            if (srs.next()) {
+            String sqlInsert = "INSERT into cause "
+                    + "(causeName) "
+                    + "VALUES (?)";
+            //System.out.println(sql);
+            PreparedStatement insertStm = con.prepareStatement(sqlInsert);
+            insertStm.setString(1, cause.getCauseName());
+            insertStm.executeUpdate();
 
-                // UPDATE
-                String sqlUpdate = "UPDATE cause " +
-                        "SET causeName = ? ," +
-                        "WHERE causeName = ?";
-                PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
-                stmt2.setString(1, s.getName());
-                stmt2.setBoolean(2,s.isFullTime());
-                stmt2.setBoolean(3, s.isGraduate());
-                stmt2.setString(4, s.getSummary());
-                stmt2.setInt(5, s.getNumber());
-                stmt2.executeUpdate();
-            } else {
-                // INSERT
-
-                String sqlInsert = "INSERT into cause "
-                        + "(causeName) "
-                        + "VALUES (?)";
-                //System.out.println(sql);
-                PreparedStatement insertStm = con.prepareStatement(sqlInsert);
-                insertStm.setString(1, category.getCategoryName());
-                insertStm.executeUpdate();
-            }
         } catch (Exception ex) {
             ex.printStackTrace();
 
