@@ -67,7 +67,7 @@ public class OwnerDAO {
                 String sqlUpdate = "UPDATE owner " +
                         "SET firstName = ? ," +
                         " lastName = ? , " +
-                        " email = ? " +
+                        " email = ? ," +
                         " phoneNumber = ? , " +
                         " userBirth = ? , " +
                         " streetName = ? , " +
