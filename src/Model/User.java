@@ -3,7 +3,6 @@ package Model;
 import Database.OwnerDAO;
 import Database.RenterDAO;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -14,7 +13,7 @@ public class User {
     private int userID;
     private String email;
     private String phoneNumber;
-    private Date userBirth;
+    private String userBirth;
     private String streetName;
     private int streetNumber;
     private String city;
@@ -24,7 +23,7 @@ public class User {
     private double selectedPercentageToCauseOfOwner;
 // Constructor voor een owner
     public User(String firstName, String lastName, String email, String phoneNumber,
-                Date userBirth, String streetName, int streetNumber, String city, int zipCode, String causeName, double selectedPercentageToCauseOfOwner){
+                String userBirth, String streetName, int streetNumber, String city, int zipCode, String causeName, double selectedPercentageToCauseOfOwner){
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = counter;
@@ -39,7 +38,7 @@ public class User {
         this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
     }
 // Constructor voor een renter
-    public User(String firstName, String lastName, String email, String phoneNumber, Date userBirth, String streetName, int streetNumber, String city, int zipCode) {
+    public User(String firstName, String lastName, String email, String phoneNumber, String userBirth, String streetName, int streetNumber, String city, int zipCode) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userID = counter;
@@ -69,7 +68,7 @@ public class User {
         return lastName;
     }
 
-    public Date getUserBirth() {
+    public String getUserBirth() {
         return userBirth;
     }
 
@@ -201,9 +200,12 @@ public class User {
     }
 
     //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
-    public void deleteUser(){
-        OwnerDAO.deleteOwner();
-        RenterDAO.deleteRenter();
+    /*
+    public void deleteUser(User userInput){
+        OwnerDAO.deleteOwner(userInput);
+        RenterDAO.deleteRenter(userInput);
     }
+
+     */
 
 }

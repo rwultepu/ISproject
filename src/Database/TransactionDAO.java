@@ -20,19 +20,19 @@ public class TransactionDAO {
             ResultSet srs = stmt.executeQuery();
             String shipmentMethod;
             int reviewProduct, reviewService, userID, clothingID;
-            Date startDate, endDate, dateOfTransaction;
+            String startDate, endDate, dateOfTransaction;
             String causeName;
 
             if (srs.next()) {
                 shipmentMethod = srs.getString("shipmentMethod");
                 reviewProduct = srs.getInt("reviewProduct");
                 reviewService = srs.getInt("reviewService");
-                startDate = srs.getDate("startDate");
-                endDate = srs.getDate("endDate");
+                startDate = srs.getString("startDate");
+                endDate = srs.getString("endDate");
                 causeName = srs.getString("causeName");
                 userID = srs.getInt("userID");
                 clothingID = srs.getInt("clothingID");
-                dateOfTransaction = srs.getDate("dateOfTransaction");
+                dateOfTransaction = srs.getString("dateOfTransaction");
 
             } else {// we verwachten slechts 1 rij...
                 return null;
@@ -77,11 +77,11 @@ public class TransactionDAO {
                 stmt2.setString(1, transaction.getShipmentMethod());
                 stmt2.setInt(2,transaction.getReviewProduct());
                 stmt2.setInt(3, transaction.getReviewService());
-                stmt2.setDate(4, (Date) transaction.getStartDate());
-                stmt2.setDate(5, (Date) transaction.getEndDate());
+                stmt2.setString(4, transaction.getStartDate());
+                stmt2.setString(5, transaction.getEndDate());
                 stmt2.setString(6, transaction.getCauseName());
                 stmt2.setInt(7, transaction.getUserID());
-                stmt2.setDate(8, (Date) transaction.getDateOfTransaction());
+                stmt2.setString(8, transaction.getDateOfTransaction());
                 stmt2.setInt(9, transaction.getClothingID());
                 stmt2.executeUpdate();
             } else {
@@ -95,12 +95,12 @@ public class TransactionDAO {
                 insertStm.setString(1, transaction.getShipmentMethod());
                 insertStm.setInt(2,transaction.getReviewProduct());
                 insertStm.setInt(3,transaction.getReviewService());
-                insertStm.setDate(4, (Date) transaction.getStartDate());
-                insertStm.setDate(5, (Date) transaction.getEndDate());
+                insertStm.setString(4, transaction.getStartDate());
+                insertStm.setString(5, transaction.getEndDate());
                 insertStm.setString(6,transaction.getCauseName());
                 insertStm.setInt(7,transaction.getUserID());
                 insertStm.setInt(8,transaction.getClothingID());
-                insertStm.setDate(8, (Date) transaction.getDateOfTransaction());
+                insertStm.setString(8, transaction.getDateOfTransaction());
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {

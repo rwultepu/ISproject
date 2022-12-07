@@ -13,7 +13,7 @@ public class  Renter extends User {
     OwnerDAO ownerDAO = new OwnerDAO();
 
 
-    public Renter(String firstName, String lastName, String email, String phoneNumber, Date userBirth, String streetName, int streetNumber, String city, int zipCode) {
+    public Renter(String firstName, String lastName, String email, String phoneNumber, String userBirth, String streetName, int streetNumber, String city, int zipCode) {
         super(firstName, lastName, email, phoneNumber, userBirth, streetName, streetNumber, city, zipCode);
     }
 

@@ -19,7 +19,7 @@ public class RenterDAO {
 
             ResultSet srs = stmt.executeQuery();
             String firstName, lastName, email, phoneNumber, streetName, city;
-            Date userBirth;
+            String userBirth;
             int streetNumber, zipCode;
 
             if (srs.next()) {
@@ -27,7 +27,7 @@ public class RenterDAO {
                 lastName = srs.getString("lastName");
                 email = srs.getString("email");
                 phoneNumber = srs.getString("phoneNumber");
-                userBirth = srs.getDate("userBirth");
+                userBirth = srs.getString("userBirth");
                 streetName = srs.getString("streetName");
                 city = srs.getString("city");
 
@@ -80,7 +80,7 @@ public class RenterDAO {
                 stmt2.setString(2, renter.getLastName());
                 stmt2.setString(3, renter.getEmail());
                 stmt2.setString(4, renter.getPhoneNumber());
-                stmt2.setDate(5, (Date) renter.getUserBirth());
+                stmt2.setString(5, renter.getUserBirth());
                 //Deze getters missen ook nog
                 stmt2.setString(6, renter.getStreetName());
                 stmt2.setInt(7, renter.getStreetNumber());
@@ -104,7 +104,7 @@ public class RenterDAO {
                 insertStm.setInt(3, renter.getUserID());
                 insertStm.setString(4, renter.getEmail());
                 insertStm.setString(5, renter.getPhoneNumber());
-                insertStm.setDate(6, (Date) renter.getUserBirth());
+                insertStm.setString(6, renter.getUserBirth());
                 //Deze getters missen ook nog
                 insertStm.setString(7, renter.getStreetName());
                 insertStm.setInt(8, renter.getStreetNumber());

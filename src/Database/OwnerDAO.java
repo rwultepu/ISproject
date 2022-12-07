@@ -19,7 +19,7 @@ public class OwnerDAO {
 
             ResultSet srs = stmt.executeQuery();
             String firstName, lastName, email, phoneNumber, streetName, city, causeName;
-            Date userBirth;
+            String userBirth;
             int streetNumber , zipCode;
             double selectedPercentageToCauseOfOwner;
 
@@ -28,7 +28,7 @@ public class OwnerDAO {
                 lastName = srs.getString("lastName");
                 email = srs.getString("email");
                 phoneNumber = srs.getString("phoneNumber");
-                userBirth = srs.getDate("userBirth");
+                userBirth = srs.getString("userBirth");
                 streetName = srs.getString("streetName");
                 city = srs.getString("city");
                 causeName = srs.getString("causeName");
@@ -85,7 +85,7 @@ public class OwnerDAO {
                 stmt2.setString(2, owner.getLastName());
                 stmt2.setString(3, owner.getEmail());
                 stmt2.setString(4, owner.getPhoneNumber());
-                stmt2.setDate(5, (Date) owner.getUserBirth());
+                stmt2.setString(5,  owner.getUserBirth());
                 //Deze getters missen ook nog
                 stmt2.setString(6, owner.getStreetName());
                 stmt2.setInt(7, owner.getStreetNumber());
@@ -112,7 +112,7 @@ public class OwnerDAO {
                 insertStm.setInt(3, owner.getUserID());
                 insertStm.setString(4, owner.getEmail());
                 insertStm.setString(5, owner.getPhoneNumber());
-                insertStm.setDate(6, (Date) owner.getUserBirth());
+                insertStm.setString(6, owner.getUserBirth());
                 //Deze getters missen ook nog
                 insertStm.setString(7, owner.getStreetName());
                 insertStm.setInt(8, owner.getStreetNumber());

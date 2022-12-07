@@ -5,9 +5,6 @@ import Database.OwnerDAO;
 import Database.TransactionDAO;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 
 public class Owner extends User {
 
@@ -18,7 +15,7 @@ public class Owner extends User {
     OwnerDAO ownerDAO = new OwnerDAO();
 
     public Owner(String firstName, String lastName, String email, String phoneNumber,
-                 Date userBirth, String streetName, int streetNumber, String city, int zipCode,
+                 String userBirth, String streetName, int streetNumber, String city, int zipCode,
                  String causeName, double selectedPercentageToCauseOfOwner){
         super(firstName, lastName, email, phoneNumber, userBirth, streetName,
                 streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
@@ -48,13 +45,13 @@ public class Owner extends User {
         return totalRenvenueOfTheMonth;
     }
 */
-    public void updatePercentageToCauseOfOwner(double newPercentage){
+    public boolean updatePercentageToCauseOfOwner(double newPercentage){
+        boolean isGelukt = false;
         if(newPercentage>0){
             setSelectedPercentageToCauseOfOwner(newPercentage);
+            isGelukt = true;
         }
-        else {
-            System.out.println("Het te doneren percentage moet groter zijn dan 0%!");
-        }
+        return isGelukt;
     }
 /*
     public ArrayList<Transaction> getTransactionHistoryOfOwner(){

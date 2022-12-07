@@ -13,8 +13,8 @@ import static java.time.temporal.ChronoUnit.DAYS;
 
 public class Transaction {
 
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private int transactionID;
     private String shipmentMethod;
     private int reviewProduct;
@@ -22,13 +22,13 @@ public class Transaction {
     private String causeName;
     private int userID;
     private int clothingID;
-    private Date dateOfTransaction;
+    private String dateOfTransaction;
 
     private ArrayList<String> ShipmentMethods;
     OwnerDAO ownerDAO = new OwnerDAO();
 
 
-    public Transaction(Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, Date dateOfTransaction) {
+    public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction) {
         this.startDate = startDate;
         this.endDate = endDate;
         this.transactionID = transactionID;
@@ -45,11 +45,11 @@ public class Transaction {
         ShipmentMethods.add(homedelivery);
     }
 
-    public Date getStartDate() {
+    public String getStartDate() {
         return startDate;
     }
 
-    public Date getEndDate() {
+    public String getEndDate() {
         return endDate;
     }
 
@@ -82,9 +82,10 @@ public class Transaction {
         return clothingID;
     }
 
-    public Date getDateOfTransaction() {
+    public String getDateOfTransaction() {
         return dateOfTransaction;
     }
+    /*
     public double getTotalPrice(Clothing c){
         // extra berekening tussen 2 data
         double totalPrice = 0;
@@ -98,6 +99,8 @@ public class Transaction {
         }
         return totalPrice;
     }
+
+     */
     public String getCauseOfOwner(int userID){
         String causeOfOwner = null;
         for(Owner o : ownerDAO.getAllOwners())
