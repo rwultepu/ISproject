@@ -91,7 +91,7 @@ public class ClothingDAO {
         }
     }
 
-    public ArrayList<Clothing> getAllClothings()  {
+    public ArrayList<Clothing> getAllClothing()  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();

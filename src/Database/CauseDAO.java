@@ -16,7 +16,7 @@ public class CauseDAO {
             con = DBHandler.getConnection();
             Statement stmt = con.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-            String sql = "SELECT DISTINCT causeName "
+            String sql = "SELECT causeName "
                     + "FROM cause";
             ResultSet srs = stmt.executeQuery(sql);
             ArrayList<String> causes = new ArrayList<>();

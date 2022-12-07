@@ -47,21 +47,6 @@ public class Owner extends User {
             }
         }return transactionHistoryOfOwner;
     }
-    /*
-    public double getTotalRevenueOfTheMonth(){
-        double totalRenvenueOfTheMonth = 0.0;
-        for(Transaction transactions1Per1: transactionDAO.getAllTransactions()){
-            if(transactions1Per1.getDateOfTransaction().)
-                //Klopt mijn meegegeven parameter?
-                // Hoe moet ik kijken of de maand van de dateOfTransaction gelijk is aan de meegegeven month
-                Calendar.getInstance().getTime().getMonth();
-            //waaerom welken deze methodes niet?
-        }
-        return totalRenvenueOfTheMonth;
-    }
-
-     */
-
 
     public int getAverageProductReviewScore(Owner owner){
         int averageProductReviewScore = 0;
@@ -72,6 +57,30 @@ public class Owner extends User {
         return averageProductReviewScore;
     }
 
+    public int getAverageServiceReviewScore(Owner owner){
+        int averageServiceReviewScore = 0;
+        for(Transaction transactionVanOwner1Per1: getTransactionHistoryOfOwner(owner)){
+            averageServiceReviewScore += transactionVanOwner1Per1.getReviewService();
+        }
+        averageServiceReviewScore = averageServiceReviewScore/(getTransactionHistoryOfOwner(owner).size());
+        return averageServiceReviewScore;
+    }
+
+    public double getTotalRevenueOfTheMonth(Owner owner, String month){
+        double totalRenvenueOfTheMonth = 0.0;
+        for(Transaction transactionsOfOwner1Per1: getTransactionHistoryOfOwner(owner)){
+            if(transactionsOfOwner1Per1.getDateOfTransaction().substring(3,5).equals(month)){
+                totalRenvenueOfTheMonth += transactionsOfOwner1Per1.getTotalPrice();
+                //Deze methode moet nog gemaakt worden in Transaction
+                //Is dit OK of moet de amount to cause hier nog uitgehaald worden?
+            }
+        }
+        return totalRenvenueOfTheMonth;
+    }
+
+    public double getTotalAmountToCause(String month){
+        double totalAmountToCause = 0.0;
+    }
 
 }
 
