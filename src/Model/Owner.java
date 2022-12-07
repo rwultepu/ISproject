@@ -19,13 +19,13 @@ public class Owner extends User {
 
     }
     public ArrayList<Clothing> getAllClothesOfOwner(Owner owner){
-        ArrayList<Clothing> clothingsOfOwner = new ArrayList<>();
-        for(Clothing clothings1Per1: clothingDAO.getAllClothings()){
+        ArrayList<Clothing> clothesOfOwner = new ArrayList<>();
+        for(Clothing clothings1Per1: clothingDAO.getAllClothing()){
             if(clothings1Per1.getUserID() == owner.getUserID()){
-                clothingsOfOwner.add(clothings1Per1);
+                clothesOfOwner.add(clothings1Per1);
             }
         }
-        return clothingsOfOwner;
+        return clothesOfOwner;
     }
     public boolean updatePercentageToCauseOfOwner(double newPercentage){
         boolean isGelukt = false;
@@ -80,6 +80,7 @@ public class Owner extends User {
 
     public double getTotalAmountToCause(String month){
         double totalAmountToCause = 0.0;
+
     }
 
 }

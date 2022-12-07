@@ -100,10 +100,10 @@ public class ClothingDAO {
             String sql = "SELECT clothingID "
                     + "FROM clothing";
             ResultSet srs = stmt.executeQuery(sql);
-            ArrayList<Clothing> clothings = new ArrayList<Clothing>();
+            ArrayList<Clothing> clothing = new ArrayList<Clothing>();
             while (srs.next())
-                clothings.add(getClothing(srs.getInt("clothingID")));
-            return clothings;
+                clothing.add(getClothing(srs.getInt("clothingID")));
+            return clothing;
         } catch (DBException dbe) {
             dbe.printStackTrace();
 
