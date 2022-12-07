@@ -46,6 +46,24 @@ public class Transaction {
         this.amountToCause = getPercentageToCauseAtTimeOfTransaction()*getTotalPrice();
     }
 
+    public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction, double amountToCause) {
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.transactionID = transactionID;
+        this.shipmentMethod = shipmentMethod;
+        this.reviewProduct = reviewProduct;
+        this.reviewService = reviewService;
+        this.causeName = causeName;
+        this.userID = userID;
+        this.clothingID = clothingID;
+        this.dateOfTransaction = dateOfTransaction;
+        String pickup = "Pick-Up";
+        String homedelivery = "Home-Delivery";
+        shipmentMethods.add(pickup);
+        shipmentMethods.add(homedelivery);
+        this.amountToCause = amountToCause;
+    }
+
     public String getStartDate() {
         return startDate;
     }
