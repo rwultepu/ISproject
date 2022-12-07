@@ -59,8 +59,8 @@ public class ClothingDAO {
                 // UPDATE
                 String sqlUpdate = "UPDATE clothing " +
                         "SET price = ? ," +
-                        " userID = ? " +
-                        " categoryName = ? " +
+                        " userID = ? ," +
+                        " categoryName = ? ," +
                         " description = ? " +
                         "WHERE clothingID = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
