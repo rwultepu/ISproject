@@ -23,14 +23,12 @@ public class User {
 
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
-
+// Constructor voor een owner
     public User(String firstName, String lastName, String email, String phoneNumber,
                 Date userBirth, String streetName, int streetNumber, String city, int zipCode, String causeName, double selectedPercentageToCauseOfOwner){
         this.firstName = firstName;
         this.lastName = lastName;
-
         this.userID = counter;
-        counter++;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
@@ -41,10 +39,11 @@ public class User {
         this.causeName = causeName;
         this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
     }
-
+// Constructor voor een renter
     public User(String firstName, String lastName, String email, String phoneNumber, Date userBirth, String streetName, int streetNumber, String city, int zipCode) {
         this.firstName = firstName;
         this.lastName = lastName;
+        this.userID = counter;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
@@ -200,6 +199,7 @@ public class User {
                 userInput.streetNumber, userInput.city, userInput.zipCode);
         OwnerDAO.saveOwner(owner);
         RenterDAO.saveRenter(renter);
+        counter++;
     }
 
     //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
