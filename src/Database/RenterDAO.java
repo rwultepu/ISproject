@@ -53,7 +53,7 @@ public class RenterDAO {
 
             String sqlSelect = "SELECT userID "
                     + "FROM renter "
-                    + "WHERE iserID = ? ";
+                    + "WHERE userID = ? ";
 
             PreparedStatement stmt = con.prepareStatement(sqlSelect);
             stmt.setInt(1, renter.getUserID());
@@ -64,7 +64,7 @@ public class RenterDAO {
                 String sqlUpdate = "UPDATE owner " +
                         "SET firstName = ? ," +
                         " lastName = ? , " +
-                        " email = ? " +
+                        " email = ? , " +
                         " phoneNumber = ? , " +
                         " userBirth = ? , " +
                         " streetName = ? , " +
