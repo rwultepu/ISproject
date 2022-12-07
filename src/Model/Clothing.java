@@ -31,17 +31,10 @@ public class Clothing {
         this.description = description;
     }
 
-    //Getter clothingID
     public int getClothingID() {return clothingID;}
-
-    //Getter price
     public double getPrice() {return price;}
-
-    //Getter categoryName
     public String getCategoryName() {return categoryName;}
-
     public String getDescription() {return description;}
-
     public int getUserID() {return userID;}
 
 
@@ -123,19 +116,32 @@ public class Clothing {
         return stringToLocalDate;
     }
 
-    // Methode retourneert een arraylist met alle kledij die beschikbaar is tussen de gegeven datums:
     public ArrayList<Clothing> getAvailableClothing(LocalDate wantedStartDate, LocalDate wantedEndDate){
         ArrayList <Clothing> availableClothing = new ArrayList<>();
-        for(Clothing c : clothingDAO.getAllClothings())
+        for(Clothing c : clothingDAO.getAllClothing())
             if(c.isAvailable(wantedStartDate, wantedEndDate,c.getClothingID()))
                 availableClothing.add(c);
         return availableClothing;
+    }
+
+    public ArrayList<Clothing> getClothingWithSpecificParameters(String wantedStartdate, String wantedEndDate, Category category){
+        ArrayList<Clothing> clothingWithSpecificParameter = new ArrayList<>();
+
+        LocalDate wantedStartDateLD = stringToLocalDate(wantedStartdate);
+        LocalDate wantedEndDateLD = stringToLocalDate(wantedEndDate);
+
+        for(Clothing clothing : getAvailableClothing(wantedStartDateLD, wantedEndDateLD))
+            if(clothing.getCategoryName().equals(category.getCategoryName()))
+                clothingWithSpecificParameter.add(clothing);
+
+        return clothingWithSpecificParameter;
     }
 
     public void addClothing(Clothing clothingInput){
         clothingDAO.saveClothing(clothingInput);
         counter++;
     }
+
     public void deleteClothing(Clothing clothingInput){
         clothingDAO.deleteClothing(clothingInput);
     }

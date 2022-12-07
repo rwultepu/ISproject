@@ -4,12 +4,12 @@ import Database.OwnerDAO;
 import Database.TransactionDAO;
 
 import java.lang.reflect.Array;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 
 public class  Renter extends User {
 
-    TransactionDAO transactionDAO = new TransactionDAO();
     OwnerDAO ownerDAO = new OwnerDAO();
 
 
@@ -30,7 +30,7 @@ public class  Renter extends User {
         return transactionHistoryOfRenter;
     }
 
-/*
+
     public ArrayList<Owner> getTopOwners(){
         ArrayList<Owner> topOwners = new ArrayList<>();
         for(Owner o: ownerDAO.getAllOwners())
@@ -47,37 +47,5 @@ public class  Renter extends User {
         return recommendedClothing;
     }
 
-    public ArrayList<Clothing> getClothingWithSpecificParameters(){
-
-    }
 }
-*/
-
-
-    /*
-
-    //Deze methode
-    public void purchaseClothings(){
-
-    }
-
-    public ArrayList<Owner> getRecommendedOwners(){
-
-    }
-
-    public void wrightReview(Review review, String userID) throws Exception{
-        if(userID == null)
-            throw new Exception();
-
-        else {
-            for()
-
-        }
-
-
-
-    }
-*/
-}
-
 
