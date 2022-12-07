@@ -16,11 +16,8 @@ public class Category {
         categories.add("Female Maxi-dress");
         categories.add("Female Pants");
         categories.add("Female Tops");
-        categories.add("Female accessories");
+        categories.add("Female Accessories");
     }
 
     public String getCategoryName() {return categoryName;}
-
-
-    //nog saveCategory voor al die Strings!!
 }

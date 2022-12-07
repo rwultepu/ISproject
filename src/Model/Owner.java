@@ -18,14 +18,14 @@ public class Owner extends User {
                 streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
 
     }
-    public ArrayList<Clothing> getAllClothesOfOwner(Owner owner){
-        ArrayList<Clothing> clothingsOfOwner = new ArrayList<>();
-        for(Clothing clothings1Per1: clothingDAO.getAllClothings()){
-            if(clothings1Per1.getUserID() == owner.getUserID()){
-                clothingsOfOwner.add(clothings1Per1);
+    public ArrayList<Clothing> getAllClothesOfOwner(){
+        ArrayList<Clothing> clothesOfOwner = new ArrayList<>();
+        for(Clothing clothings1Per1: clothingDAO.getAllClothing()){
+            if(clothings1Per1.getUserID() == getUserID()){
+                clothesOfOwner.add(clothings1Per1);
             }
         }
-        return clothingsOfOwner;
+        return clothesOfOwner;
     }
     public boolean updatePercentageToCauseOfOwner(double newPercentage){
         boolean isGelukt = false;
@@ -37,10 +37,10 @@ public class Owner extends User {
     }
 
     //Retourneert een ArrayList van alle transactions waarin kledingstukken van de Owner gehuurd werden
-    public ArrayList<Transaction> getTransactionHistoryOfOwner(Owner owner){
+    public ArrayList<Transaction> getTransactionHistoryOfOwner(){
         ArrayList<Transaction> transactionHistoryOfOwner = new ArrayList<>();
         for(Transaction transactions1Per1: transactionDAO.getAllTransactions()){
-            for(Clothing clothes1Per1VanOwner: getAllClothesOfOwner(owner)){
+            for(Clothing clothes1Per1VanOwner: getAllClothesOfOwner()){
                 if(transactions1Per1.getClothingID() == clothes1Per1VanOwner.getClothingID()){
                     transactionHistoryOfOwner.add(transactions1Per1);
                 }
@@ -48,27 +48,27 @@ public class Owner extends User {
         }return transactionHistoryOfOwner;
     }
 
-    public int getAverageProductReviewScore(Owner owner){
+    public int getAverageProductReviewScore(){
         int averageProductReviewScore = 0;
-        for(Transaction transactionVanOwner1Per1: getTransactionHistoryOfOwner(owner)){
+        for(Transaction transactionVanOwner1Per1: getTransactionHistoryOfOwner()){
             averageProductReviewScore += transactionVanOwner1Per1.getReviewProduct();
         }
-        averageProductReviewScore = averageProductReviewScore/(getTransactionHistoryOfOwner(owner).size());
+        averageProductReviewScore = averageProductReviewScore/(getTransactionHistoryOfOwner().size());
         return averageProductReviewScore;
     }
 
-    public int getAverageServiceReviewScore(Owner owner){
+    public int getAverageServiceReviewScore(){
         int averageServiceReviewScore = 0;
-        for(Transaction transactionVanOwner1Per1: getTransactionHistoryOfOwner(owner)){
+        for(Transaction transactionVanOwner1Per1: getTransactionHistoryOfOwner()){
             averageServiceReviewScore += transactionVanOwner1Per1.getReviewService();
         }
-        averageServiceReviewScore = averageServiceReviewScore/(getTransactionHistoryOfOwner(owner).size());
+        averageServiceReviewScore = averageServiceReviewScore/(getTransactionHistoryOfOwner().size());
         return averageServiceReviewScore;
     }
 
-    public double getTotalRevenueOfTheMonth(Owner owner, String month){
+    public double getTotalRevenueOfTheMonth(String month){
         double totalRenvenueOfTheMonth = 0.0;
-        for(Transaction transactionsOfOwner1Per1: getTransactionHistoryOfOwner(owner)){
+        for(Transaction transactionsOfOwner1Per1: getTransactionHistoryOfOwner()){
             if(transactionsOfOwner1Per1.getDateOfTransaction().substring(3,5).equals(month)){
                 totalRenvenueOfTheMonth += transactionsOfOwner1Per1.getTotalPrice();
                 //Deze methode moet nog gemaakt worden in Transaction
@@ -80,6 +80,7 @@ public class Owner extends User {
 
     public double getTotalAmountToCause(String month){
         double totalAmountToCause = 0.0;
+
     }
 
 }
