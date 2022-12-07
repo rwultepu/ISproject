@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class Category {
     private String categoryName;
-    public String getCategoryName() {return categoryName;}
-
     private ArrayList<String> categories;
 
     public Category(String categoryName) {
@@ -20,6 +18,9 @@ public class Category {
         categories.add("Female Tops");
         categories.add("Female accessories");
     }
+
+    public String getCategoryName() {return categoryName;}
+
 
     //nog saveCategory voor al die Strings!!
 }
