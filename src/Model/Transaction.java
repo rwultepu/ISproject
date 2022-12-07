@@ -1,10 +1,12 @@
 package Model;
 
+import Database.ClothingDAO;
 import Database.OwnerDAO;
 import Database.RenterDAO;
 import Database.TransactionDAO;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -20,12 +22,14 @@ public class Transaction {
     private int reviewProduct;
     private int reviewService;
     private String causeName;
+    // userID van de renter:
     private int userID;
     private int clothingID;
     private String dateOfTransaction;
 
     private ArrayList<String> ShipmentMethods;
     OwnerDAO ownerDAO = new OwnerDAO();
+    ClothingDAO clothingDAO = new ClothingDAO();
 
 
     public Transaction(String startDate, String endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, String dateOfTransaction) {
@@ -85,37 +89,98 @@ public class Transaction {
     public String getDateOfTransaction() {
         return dateOfTransaction;
     }
-    /*
-    public double getTotalPrice(Clothing c){
-        // extra berekening tussen 2 data
-        double totalPrice = 0;
-        long dateBeforeInMs = startDate.getTime();
-        long dateAfterInMs = endDate.getTime();
 
-        long timeDiff = Math.abs(dateAfterInMs - dateBeforeInMs);
-        int numberOfDaysOfRentPeriod = (int) TimeUnit.DAYS.convert(timeDiff, TimeUnit.MILLISECONDS);
-        if(c.getClothingID() == clothingID){
-            totalPrice = c.getPrice()*numberOfDaysOfRentPeriod;
-        }
+    public double getTotalPrice(){
+        LocalDate startDateLD = stringToLocalDate(startDate);
+        LocalDate endDateLD = stringToLocalDate(endDate);
+        int numberOfDaysOfRentPeriod = (int)Duration.between(startDateLD, endDateLD).toDays();
+        double totalPrice = 0.0;
+        for(Clothing c : clothingDAO.getAllClothing())
+            if(c.getClothingID() == clothingID)
+                totalPrice = c.getPrice()*numberOfDaysOfRentPeriod - ;
         return totalPrice;
     }
 
-     */
-    public String getCauseOfOwner(int userID){
+    public String getCauseOfOwner(){
         String causeOfOwner = null;
-        for(Owner o : ownerDAO.getAllOwners())
-            if(o.getUserID() == userID)
-                causeOfOwner = o.getCauseName();
-        return causeOfOwner;
+        boolean flag = false;
+        for(Owner o : ownerDAO.getAllOwners()){
+            for(Clothing c : o.getAllClothesOfOwner())
+                if (c.getClothingID() == clothingID) {
+                    flag = true;
+                    break;
+                }
+            causeOfOwner = o.getCauseName();
+        }
+    return causeOfOwner;
     }
-    /*
+
     public double getPercentageToCauseAtTimeOfTransaction(){
 
     }
-
-     */
-    public void addTransaction(Transaction transactionInput){
+    public boolean addTransaction(Transaction transactionInput){
         TransactionDAO.save(transactionInput);
+        return true;
+    }
+
+
+    public boolean isValidDate(String date){
+        boolean flag = false;
+
+        int dayString = Integer.parseInt(date.substring(0,2));
+        int monthString = Integer.parseInt(date.substring(3,5));
+        int yearString = Integer.parseInt(date.substring(6,10));
+
+        boolean leapYear = (yearString%4 == 0);
+
+        if(leapYear){
+            if((yearString%100 == 0) && (yearString%400 !=0))
+                leapYear = false;}
+
+        if((monthString>= 1) && (monthString<= 12))
+            if ((monthString == 9)||(monthString == 4)||(monthString == 11 )||(monthString == 6) ) {
+                if ((dayString >= 1) && (dayString <= 30))
+                    flag = true;
+                else
+                    flag = false;
+            }
+
+            else if ((monthString == 2)) {
+                if ((leapYear))
+                    if ((dayString <= 29) && (dayString >= 1))
+                        flag = true;
+                    else
+                        flag = false;
+
+                else if ((dayString <= 28) && (dayString >= 1))
+                    flag = true;
+                else
+                    flag = false;
+            }
+
+            else
+            if ((dayString>=1)&& (dayString<=31))
+                flag = true;
+            else
+                flag = false;
+
+        else
+            flag = false;
+
+        return flag;
+    }
+
+    public LocalDate stringToLocalDate(String date){
+        LocalDate stringToLocalDate = null;
+
+        int day = Integer.parseInt(date.substring(0,2));
+        int month = Integer.parseInt(date.substring(3,5));
+        int year = Integer.parseInt(date.substring(6,10));
+
+        if(isValidDate(date))
+            stringToLocalDate = LocalDate.of(day, month, year);
+
+        return stringToLocalDate;
     }
 
 }
