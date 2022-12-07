@@ -3,8 +3,8 @@ package Model;
 import Database.OwnerDAO;
 import Database.RenterDAO;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class User {
 
@@ -21,6 +21,10 @@ public class User {
     private int counter = 1;
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
+    private int lDay;
+    private int lMonth;
+    private int lYear;
+
 // Constructor voor een owner
     public User(String firstName, String lastName, String email, String phoneNumber,
                 String userBirth, String streetName, int streetNumber, String city, int zipCode, String causeName, double selectedPercentageToCauseOfOwner){
@@ -56,80 +60,21 @@ public class User {
 
     //Getter email
     public String getEmail() {return email;}
-
     //Getter phoneNumber
     public String getPhoneNumber() {return phoneNumber;}
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public String getUserBirth() {
-        return userBirth;
-    }
-
-    public String getStreetName() {
-        return streetName;
-    }
-
-    public int getStreetNumber() {
-        return streetNumber;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public int getZipCode() {
-        return zipCode;
-    }
-
-    public String getCauseName() {
-        return causeName;
-    }
-
-    public double getSelectedPercentageToCauseOfOwner() {
-        return selectedPercentageToCauseOfOwner;
-    }
-
-    public void setSelectedPercentageToCauseOfOwner(double selectedPercentageToCauseOfOwner) {
-        this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
-    }
-
-    //Deze methode retourneert de volledige naam van de gebruiker.
-    //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
-
-    /*
-    public String getName(){
-        return this.firstName + " " + this.lastName;
-    }
-
-    //Deze methode retourneert het volledig adres van de gebruiker.
-    //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
-    public String getAddress(){
-        return this.streetName + " " + this.streetNumber + "\n"
-                + this.zipCode + " " + this.city;
-    }
+    public String getFirstName() {return firstName;}
+    public String getLastName() {return lastName;}
+    public String getUserBirth() {return userBirth;}
+    public String getStreetName() {return streetName;}
+    public int getStreetNumber() {return streetNumber;}
+    public String getCity() {return city;}
+    public int getZipCode() {return zipCode;}
+    public String getCauseName() {return causeName;}
+    public double getSelectedPercentageToCauseOfOwner() {return selectedPercentageToCauseOfOwner;}
+    public void setSelectedPercentageToCauseOfOwner(double selectedPercentageToCauseOfOwner) {this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;}
 
 
-    //Deze methode retourneert hoe oud de gebruiker is.
-    //Opmerking: deze methode moet eigelijk geen argumenten meekrijgen.
-
-    public LocalDate convertToLocalDateViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant().atZone(hgg.systemDefault()).toLocalDate();
-    }
-
-    public LocalDate convertToLocalDateViaSqlDate(Date dateToConvert) {
-        return new java.sql.Date(dateToConvert.getTime()).toLocalDate();
-    }
-     */
-
-    /*Wachten op de mail van Gailly
-
+/*
     public int getAge(){
         int ageUser = 0;
 
@@ -154,8 +99,90 @@ public class User {
     */
 
 
-
     //public ArrayList<Owner> getAllOwners()
+    //date: dd/mm/yyyy
+    public boolean isValidDate(String date){
+        boolean flag = false;
+
+        int dayString = Integer.parseInt(date.substring(0,1));
+        int monthString = Integer.parseInt(date.substring(3,4));
+        int yearString = Integer.parseInt(date.substring(6,9));
+
+        boolean leapYear = (yearString%4 == 0);
+
+
+        if(leapYear){
+            if((yearString%100 == 0) && (yearString%400 !=0))
+                leapYear = false;}
+
+        if((monthString>= 1) && (monthString<= 12))
+            if ((monthString == 9)||(monthString == 4)||(monthString == 11 )||(monthString == 6) ) {
+                if ((dayString >= 1) && (dayString <= 30))
+                    flag = true;
+                else
+                    flag = false;
+            }
+
+            else if ((monthString == 2)) {
+                if ((leapYear))
+                    if ((dayString <= 29) && (dayString >= 1))
+                        flag = true;
+                    else
+                        flag = false;
+
+                else if ((dayString <= 28) && (dayString >= 1))
+                    flag = true;
+                else
+                    flag = false;
+            }
+
+            else
+            if ((dayString>=1)&& (dayString<=31))
+                flag = true;
+            else
+                flag = false;
+
+        else
+            flag = false;
+
+        return flag;
+    }
+
+    public LocalDate stringToLocalDate(String date){
+        LocalDate stringToLocalDate = null;
+
+        int day = Integer.parseInt(date.substring(0, 1));
+        int month = Integer.parseInt(date.substring(3, 4));
+        int year = Integer.parseInt(date.substring(6,9));
+
+        if(isValidDate(date))
+            stringToLocalDate = LocalDate.of(day, month, year);
+
+        return stringToLocalDate;
+    }
+
+    /*
+    int ageUser = 0;
+
+        LocalDate geboorteDatum = convertToLocalDateViaSqlDate(Date userBirth);
+        int dag = userBirth.getDayOfMonth();
+
+        int maand = Integer.parseInt(userBirth.substring(3, 4));
+        int jaar = Integer.parseInt(userBirth.substring(6,9));
+
+        LocalDate geboorteDatum = LocalDate.of(jaar, maand, dag);
+
+        Date huidigeDatum = Date.no
+        LocalDate huidigeDatum = LocalDate.now();
+
+        if(huidigeDatum.isBefore(geboorteDatum))
+            ageUser = jaar;
+        else if ((huidigeDatum.isAfter(geboorteDatum)) || huidigeDatum.isEqual(geboorteDatum))
+            ageUser = jaar + 1;
+
+        return ageUser;
+     */
+
 
     public boolean isValidEmail(String email){
         boolean validEmail = false;
@@ -183,12 +210,8 @@ public class User {
     }
      */
 
-    /*
-    String firstName, String lastName, int userID, String email, String phoneNumber,
-    Date userBirth, String streetName, int streetNumber, String city, int zipCode,
-    String causeName, double selectedPercentageToCauseOfOwner
-    */
-// Wegschrijven van UserObject naar database
+
+    // Wegschrijven van UserObject naar database
     public void addUser(User userInput){
         Owner owner = new Owner(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
                 userInput.streetNumber, userInput.city, userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
@@ -199,7 +222,7 @@ public class User {
         counter++;
     }
     
-//Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
+    //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
     public void deleteUser(User userInput){
         Owner owner = new Owner(userInput.firstName,userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
                 userInput.streetNumber, userInput.city, userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
