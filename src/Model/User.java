@@ -21,13 +21,30 @@ public class User {
     private int zipCode;
     private int counter = 1;
 
-    public User(String firstName, String lastName, int userID, String email, String phoneNumber,
-                Date userBirth, String streetName, int streetNumber, String city, int zipCode){
+    private String causeName;
+    private double selectedPercentageToCauseOfOwner;
+
+    public User(String firstName, String lastName, String email, String phoneNumber,
+                Date userBirth, String streetName, int streetNumber, String city, int zipCode, String causeName, double selectedPercentageToCauseOfOwner){
         this.firstName = firstName;
         this.lastName = lastName;
 
         this.userID = counter;
+        counter++;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.userBirth = userBirth;
+        this.streetName = streetName;
+        this.streetNumber = streetNumber;
+        this.city = city;
+        this.zipCode = zipCode;
+        this.causeName = causeName;
+        this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
+    }
 
+    public User(String firstName, String lastName, String email, String phoneNumber, Date userBirth, String streetName, int streetNumber, String city, int zipCode) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userBirth = userBirth;
@@ -72,6 +89,18 @@ public class User {
 
     public int getZipCode() {
         return zipCode;
+    }
+
+    public String getCauseName() {
+        return causeName;
+    }
+
+    public double getSelectedPercentageToCauseOfOwner() {
+        return selectedPercentageToCauseOfOwner;
+    }
+
+    public void setSelectedPercentageToCauseOfOwner(double selectedPercentageToCauseOfOwner) {
+        this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
     }
 
     //Deze methode retourneert de volledige naam van de gebruiker.
@@ -163,23 +192,20 @@ public class User {
     String causeName, double selectedPercentageToCauseOfOwner
     */
 
-    public void addUser(String firstName, String lastName, int userID, String email, String phoneNumber,
-                        Date userBirth, String streetName, int streetNumber, String city, int zipCode,
-                        String causeName, double selectedPercentageToCauseOfOwner){
-        User user = new User(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode);
-        Owner owner = new Owner(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
-                streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
-        Renter renter = new Renter(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
-                streetNumber, city, zipCode);
+    public void addUser(User userInput){
+        User user = new User(userInput.firstName,userInput.lastName,userInput.email,userInput.phoneNumber,userInput.userBirth,userInput.streetName,userInput.streetNumber,userInput.city,userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
+        Owner owner = new Owner(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
+                userInput.streetNumber, userInput.city, userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
+        Renter renter = new Renter(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
+                userInput.streetNumber, userInput.city, userInput.zipCode);
         OwnerDAO.saveOwner(owner);
         RenterDAO.saveRenter(renter);
-        counter++;
     }
 
     //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
-    public void deleteUser(){
+    /*public void deleteUser(){
         OwnerDAO.deleteOwner();
         RenterDAO.deleteRenter();
-    }
+    }*/
 
 }

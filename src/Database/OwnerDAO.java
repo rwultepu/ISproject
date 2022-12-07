@@ -40,7 +40,7 @@ public class OwnerDAO {
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Owner owner = new Owner(firstName,lastName,userID,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,causeName,selectedPercentageToCauseOfOwner);
+            Owner owner = new Owner(firstName,lastName,email,phoneNumber,userBirth,streetName,streetNumber,city,zipCode,causeName,selectedPercentageToCauseOfOwner);
             return owner;
         } catch (Exception ex) {
             ex.printStackTrace();

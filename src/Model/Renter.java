@@ -13,8 +13,8 @@ public class  Renter extends User {
     OwnerDAO ownerDAO = new OwnerDAO();
 
 
-    public Renter(String firstName, String lastName, int userID, String email, String phoneNumber, Date userBirth, String streetName, int streetNumber, String city, int zipCode) {
-        super(firstName, lastName, userID, email, phoneNumber, userBirth, streetName, streetNumber, city, zipCode);
+    public Renter(String firstName, String lastName, String email, String phoneNumber, Date userBirth, String streetName, int streetNumber, String city, int zipCode) {
+        super(firstName, lastName, email, phoneNumber, userBirth, streetName, streetNumber, city, zipCode);
     }
 
     public ArrayList<Transaction> getTransactionHistoryOfRenter(int userID){
@@ -30,7 +30,7 @@ public class  Renter extends User {
         return transactionHistoryOfRenter;
     }
 
-
+/*
     public ArrayList<Owner> getTopOwners(){
         ArrayList<Owner> topOwners = new ArrayList<>();
         for(Owner o: ownerDAO.getAllOwners())
@@ -51,7 +51,7 @@ public class  Renter extends User {
 
     }
 }
-
+*/
 
 
     /*
@@ -77,7 +77,7 @@ public class  Renter extends User {
 
 
     }
-
+*/
 }
 
-     */
+

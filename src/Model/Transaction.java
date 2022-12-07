@@ -105,12 +105,13 @@ public class Transaction {
                 causeOfOwner = o.getCauseName();
         return causeOfOwner;
     }
+    /*
     public double getPercentageToCauseAtTimeOfTransaction(){
 
     }
-    public void addTransaction( Date startDate, Date endDate, int transactionID, String shipmentMethod, int reviewProduct, int reviewService, String causeName, int userID, int clothingID, Date dateOfTransaction){
-       Transaction transaction = new Transaction(startDate, endDate,transactionID,shipmentMethod, reviewProduct, reviewService,causeName, userID, clothingID, dateOfTransaction);
 
+     */
+    public void addTransaction( Transaction transaction){
         TransactionDAO.save(transaction);
     }
 
@@ -129,4 +130,4 @@ public class Transaction {
     public ArrayList<User> getRenters() {return renters;}
 
 
-}
+} */

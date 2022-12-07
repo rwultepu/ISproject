@@ -37,7 +37,7 @@ public class RenterDAO {
             } else {// we verwachten slechts 1 rij...
                 return null;
             }
-            Renter renter = new Renter(firstName, lastName, userID, email, phoneNumber, userBirth, streetName, streetNumber, city, zipCode);
+            Renter renter = new Renter(firstName, lastName, email, phoneNumber, userBirth, streetName, streetNumber, city, zipCode);
             return renter;
         } catch (Exception ex) {
             ex.printStackTrace();

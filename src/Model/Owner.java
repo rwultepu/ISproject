@@ -13,29 +13,16 @@ public class Owner extends User {
 
     Owner owner;
 
-    private String causeName;
-    private double selectedPercentageToCauseOfOwner;
-
     TransactionDAO transactionDAO = new TransactionDAO();
     ClothingDAO clothingDAO = new ClothingDAO();
     OwnerDAO ownerDAO = new OwnerDAO();
 
-    public Owner(String firstName, String lastName, int userID, String email, String phoneNumber,
+    public Owner(String firstName, String lastName, String email, String phoneNumber,
                  Date userBirth, String streetName, int streetNumber, String city, int zipCode,
                  String causeName, double selectedPercentageToCauseOfOwner){
-        super(firstName, lastName, userID, email, phoneNumber, userBirth, streetName,
-                streetNumber, city, zipCode);
+        super(firstName, lastName, email, phoneNumber, userBirth, streetName,
+                streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
 
-        this.causeName = causeName;
-        this.selectedPercentageToCauseOfOwner = selectedPercentageToCauseOfOwner;
-    }
-
-    public String getCauseName() {
-        return causeName;
-    }
-
-    public double getSelectedPercentageToCauseOfOwner() {
-        return selectedPercentageToCauseOfOwner;
     }
 
 
@@ -46,8 +33,9 @@ public class Owner extends User {
                 clothingsOfOwner.add(clothings1Per1);
             }
         }
+        return clothingsOfOwner;
     }
-
+/*
     public double getTotalRevenueOfTheMonth(){
         double totalRenvenueOfTheMonth = 0.0;
         for(Transaction transactions1Per1: transactionDAO.getAllTransactions()){
@@ -59,23 +47,23 @@ public class Owner extends User {
         }
         return totalRenvenueOfTheMonth;
     }
-
+*/
     public void updatePercentageToCauseOfOwner(double newPercentage){
         if(newPercentage>0){
-            selectedPercentageToCauseOfOwner = newPercentage;
+            setSelectedPercentageToCauseOfOwner(newPercentage);
         }
         else {
             System.out.println("Het te doneren percentage moet groter zijn dan 0%!");
         }
     }
-
+/*
     public ArrayList<Transaction> getTransactionHistoryOfOwner(){
         ArrayList<Transaction> transactionHistoryOfOwner = new ArrayList<>();
         for(Transaction transactions1Per1: transactionDAO.getAllTransactions()){
             for(int clothingIDsOfOwner1Per1: owner.getAllClothesOfOwner().)
         }
     }
-
+*/
 
 
 }

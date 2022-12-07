@@ -46,7 +46,7 @@ public class TransactionDAO {
         }
     }
 
-    public void save(Transaction transaction)  {
+    public static void save(Transaction transaction)  {
         Connection con = null;
         try {
             con = DBHandler.getConnection();
