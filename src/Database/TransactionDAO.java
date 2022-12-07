@@ -93,20 +93,21 @@ public class TransactionDAO {
                 // INSERT
 
                 String sqlInsert = "INSERT into transaction "
-                        + "(shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID,dateOfTransaction, amountToCause) "
-                        + "VALUES (?,?,?,?,?,?,?,?,?,?)";
+                        + "(transactionID, shipmentMethod, reviewProduct, reviewService, startDate, endDate, causeName, userID, clothingID,dateOfTransaction, amountToCause) "
+                        + "VALUES (?,?,?,?,?,?,?,?,?,?,?)";
                 //System.out.println(sql);
                 PreparedStatement insertStm = con.prepareStatement(sqlInsert);
-                insertStm.setString(1, transaction.getShipmentMethod());
-                insertStm.setInt(2,transaction.getReviewProduct());
-                insertStm.setInt(3,transaction.getReviewService());
-                insertStm.setString(4, transaction.getStartDate());
-                insertStm.setString(5, transaction.getEndDate());
-                insertStm.setString(6,transaction.getCauseName());
-                insertStm.setInt(7,transaction.getUserID());
-                insertStm.setInt(8,transaction.getClothingID());
-                insertStm.setString(9, transaction.getDateOfTransaction());
-                insertStm.setDouble(10, transaction.getAmountToCause());
+                insertStm.setInt(1,transaction.getTransactionID());
+                insertStm.setString(2, transaction.getShipmentMethod());
+                insertStm.setInt(3,transaction.getReviewProduct());
+                insertStm.setInt(4,transaction.getReviewService());
+                insertStm.setString(5, transaction.getStartDate());
+                insertStm.setString(6, transaction.getEndDate());
+                insertStm.setString(7,transaction.getCauseName());
+                insertStm.setInt(8,transaction.getUserID());
+                insertStm.setInt(9,transaction.getClothingID());
+                insertStm.setString(10, transaction.getDateOfTransaction());
+                insertStm.setDouble(11, transaction.getAmountToCause());
                 insertStm.executeUpdate();
             }
         } catch (Exception ex) {
