@@ -20,7 +20,4 @@ public class Category {
     }
 
     public String getCategoryName() {return categoryName;}
-
-
-    //nog saveCategory voor al die Strings!!
 }

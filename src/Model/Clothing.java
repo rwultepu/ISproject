@@ -13,6 +13,7 @@ import java.util.Locale;
 public class Clothing {
 
     private int clothingID;
+    // price per day
     private double price;
     //userID van Owner:
     private int userID;
@@ -116,10 +117,12 @@ public class Clothing {
         return stringToLocalDate;
     }
 
-    public ArrayList<Clothing> getAvailableClothing(LocalDate wantedStartDate, LocalDate wantedEndDate){
+    public ArrayList<Clothing> getAvailableClothing(String wantedStartDate, String wantedEndDate){
         ArrayList <Clothing> availableClothing = new ArrayList<>();
+        LocalDate wantedStartDateLD = stringToLocalDate(wantedStartDate);
+        LocalDate wantedEndDateLD = stringToLocalDate(wantedEndDate);
         for(Clothing c : clothingDAO.getAllClothing())
-            if(c.isAvailable(wantedStartDate, wantedEndDate,c.getClothingID()))
+            if(c.isAvailable(wantedStartDateLD, wantedEndDateLD,c.getClothingID()))
                 availableClothing.add(c);
         return availableClothing;
     }

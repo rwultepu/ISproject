@@ -34,7 +34,7 @@ public class  Renter extends User {
     public ArrayList<Owner> getTopOwners(){
         ArrayList<Owner> topOwners = new ArrayList<>();
         for(Owner o: ownerDAO.getAllOwners())
-            if(o.getAverageProductReviewScore>=3 && o.getAverageServiceReviewScore>=3)
+            if(o.getAverageProductReviewScore()>=3 && o.getAverageServiceReviewScore()>=3)
                 topOwners.add(o);
         return topOwners;
     }
