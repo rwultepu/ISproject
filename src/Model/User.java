@@ -19,6 +19,7 @@ public class User {
     private int streetNumber;
     private String city;
     private int zipCode;
+    //Deze counter bepaald de userID, deze doet ++ telkens wanneer er een nieuwe user wordt aangemaakt
     private int counter = 1;
     private String causeName;
     private double selectedPercentageToCauseOfOwner;
@@ -74,9 +75,9 @@ public class User {
     public boolean isValidDate(String date){
         boolean flag = false;
 
-        int dayString = Integer.parseInt(date.substring(0,1));
-        int monthString = Integer.parseInt(date.substring(3,4));
-        int yearString = Integer.parseInt(date.substring(6,9));
+        int dayString = Integer.parseInt(date.substring(0,2));
+        int monthString = Integer.parseInt(date.substring(3,5));
+        int yearString = Integer.parseInt(date.substring(6,10));
 
         boolean leapYear = (yearString%4 == 0);
 
@@ -120,9 +121,9 @@ public class User {
     public LocalDate stringToLocalDate(String date){
         LocalDate stringToLocalDate = null;
 
-        int day = Integer.parseInt(date.substring(0, 1));
-        int month = Integer.parseInt(date.substring(3, 4));
-        int year = Integer.parseInt(date.substring(6,9));
+        int day = Integer.parseInt(date.substring(0,2));
+        int month = Integer.parseInt(date.substring(3,5));
+        int year = Integer.parseInt(date.substring(6,10));
 
         if(isValidDate(date))
             stringToLocalDate = LocalDate.of(day, month, year);
@@ -167,7 +168,7 @@ public class User {
         RenterDAO.saveRenter(renter);
         counter++;
     }
-    
+
     //Opmerking: Rune en Hendrieke: Klopt het dat we bij deze
     public void deleteUser(User userInput){
         Owner owner = new Owner(userInput.firstName,userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
