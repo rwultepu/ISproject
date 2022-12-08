@@ -75,7 +75,7 @@ public class TransactionDAO {
                         " userID = ? , " +
                         " clothingID = ? , " +
                         " dateOfTransaction = ? , " +
-                        "amountToCause = ? ," +
+                        "amountToCause = ? " +
                         "WHERE transactionID = ?";
                 PreparedStatement stmt2 = con.prepareStatement(sqlUpdate);
                 stmt2.setString(1, transaction.getShipmentMethod());
