@@ -80,7 +80,6 @@ public class Owner extends User {
 
     public double getTotalAmountToCause(String month){
         double totalAmountToCause = 0.0;
-        return totalAmountToCause;
 
     }
 
