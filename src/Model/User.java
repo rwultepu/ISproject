@@ -159,11 +159,11 @@ public class User {
     }
 
     // Wegschrijven van UserObject naar database
-    public void addUser(User userInput){
-        Owner owner = new Owner(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
-                userInput.streetNumber, userInput.city, userInput.zipCode, userInput.causeName, userInput.selectedPercentageToCauseOfOwner);
-        Renter renter = new Renter(userInput.firstName, userInput.lastName, userInput.email, userInput.phoneNumber, userInput.userBirth, userInput.streetName,
-                userInput.streetNumber, userInput.city, userInput.zipCode);
+    public void addUser(){
+        Owner owner = new Owner(firstName, lastName, email, phoneNumber, userBirth, streetName,
+                streetNumber, city, zipCode, causeName, selectedPercentageToCauseOfOwner);
+        Renter renter = new Renter(firstName, lastName, email, phoneNumber, userBirth, streetName,
+                streetNumber, city, zipCode);
         OwnerDAO.saveOwner(owner);
         RenterDAO.saveRenter(renter);
         counter++;
